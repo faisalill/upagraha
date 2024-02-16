@@ -4,7 +4,7 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 -->
 
 <script>
-  import { Group } from 'three'
+  import { Group, ShaderMaterial } from 'three'
   import { T, forwardEventHandlers } from '@threlte/core'
   import { useGltf } from '@threlte/extras'
   import { onMount } from 'svelte';
@@ -22,17 +22,26 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     <slot name="fallback" />
   {:then gltf}
     <T.Group position={[-0.6, 0.73, -0.32]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Mesh011.geometry} material={gltf.materials['battery_holder.004']} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_1.geometry} material={gltf.materials.battery_cells} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_2.geometry} material={gltf.materials['battery_holder.008']} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_3.geometry} material={gltf.materials.side_panels} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_4.geometry} material={gltf.materials.batter_pcb_plate} />
+      <T.Points geometry={gltf.nodes.Mesh011.geometry} material={gltf.materials['battery_holder.004']} />
+      <T.Points geometry={gltf.nodes.Mesh011_1.geometry} material={gltf.materials.battery_cells} />
+      <T.Points geometry={gltf.nodes.Mesh011_2.geometry} material={gltf.materials['battery_holder.008']} />
+      <T.Points geometry={gltf.nodes.Mesh011_3.geometry} material={gltf.materials.side_panels} />
+      <T.Points geometry={gltf.nodes.Mesh011_4.geometry} material={gltf.materials.batter_pcb_plate} />
     </T.Group>
     <T.Group position={[0.26, 0.66, 0.47]} rotation={[-Math.PI / 2, -Math.PI / 2, 0]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Magnetometer001.geometry} material={gltf.materials['body.002']} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer001_1.geometry} material={gltf.materials['pins_holder.002']} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer001_2.geometry} material={gltf.materials['pins.005']} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer001_3.geometry} material={gltf.materials['holder.002']} />
+      <T.Points geometry={gltf.nodes.Magnetometer001.geometry} >
+        <T.ShaderMaterial
+          vertexShader={`
+            void main() {
+              gl_PointSize = 2.0;
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+`}
+        />
+      </T.Points>
+      <T.Points geometry={gltf.nodes.Magnetometer001_1.geometry} material={gltf.materials['pins_holder.002']} />
+      <T.Points geometry={gltf.nodes.Magnetometer001_2.geometry} material={gltf.materials['pins.005']} />
+      <T.Points geometry={gltf.nodes.Magnetometer001_3.geometry} material={gltf.materials['holder.002']} />
     </T.Group>
     <T.Group position={[0.4, 0.66, -0.27]} rotation={[Math.PI, 0, Math.PI / 2]} scale={0.01}>
       <T.Mesh geometry={gltf.nodes.Magnetometer002.geometry} material={gltf.materials['body.002']} />
@@ -48,10 +57,20 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
       scale={0.01}
     />
     <T.Group position={[1.21, 0.64, 0.06]} rotation={[0, -1.57, 0]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Payload001.geometry} material={gltf.materials['Material.007']} />
-      <T.Mesh geometry={gltf.nodes.Payload001_1.geometry} material={gltf.materials['pins.002']} />
-      <T.Mesh geometry={gltf.nodes.Payload001_2.geometry} material={gltf.materials['pin_holders.001']} />
-      <T.Mesh geometry={gltf.nodes.Payload001_3.geometry} material={gltf.materials['lens.001']} />
+      <T.Points geometry={gltf.nodes.Payload001.geometry}>
+        <T.ShaderMaterial 
+        wireframe
+        vertexShader={`
+          void main() {
+            gl_PointSize = 6.0;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+          `}
+        />
+      </T.Points>
+      <T.Points geometry={gltf.nodes.Payload001_1.geometry} material={gltf.materials['pins.002']} />
+      <T.Points geometry={gltf.nodes.Payload001_2.geometry} material={gltf.materials['pin_holders.001']} />
+      <T.Points geometry={gltf.nodes.Payload001_3.geometry} material={gltf.materials['lens.001']} />
     </T.Group>
     <T.Mesh
       geometry={gltf.nodes.side_panel.geometry}

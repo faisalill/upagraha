@@ -3,7 +3,7 @@
   import { OrbitControls, useGltf, InstancedMesh, Instance } from '@threlte/extras';
   import Satellite from '$lib/components/models/satellite.svelte';
   import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
-  import { EquirectangularReflectionMapping, Vector3, DoubleSide } from 'three';
+  import { EquirectangularReflectionMapping, Vector3, DoubleSide, LineBasicMaterial, MeshBasicMaterial, WireframeGeometry } from 'three';
   import { MeshSurfaceSampler } from 'three/addons/math/MeshSurfaceSampler.js';
   import { onMount } from 'svelte';
 
@@ -15,6 +15,7 @@
   let sidePanelPositions = [];
   let particlesCount = 10;
   let shaderMaterialRef;
+  let pointsRef;
   const { scene } = useThrelte();
 
   onMount(async() => {
@@ -39,9 +40,10 @@
   })
 
   useTask((delta) =>{
-    if (isLoaded) {
-      shaderMaterialRef.uniforms.uTime.value += delta;
-    }
+    // if (isLoaded) {
+    //   shaderMaterialRef.uniforms.uTime.value += delta;
+    //   pointsRef.rotation.z += 0.01;
+    // }
   })
 
 </script>
@@ -55,34 +57,38 @@
 
 {#await model then value}
 <T.Points
- geometry={value.nodes.side_panel.geometry}
+ geometry={value.nodes.Payload001.geometry}
+ bind:ref={pointsRef}
 >
-  <T.ShaderMaterial 
-    bind:ref={shaderMaterialRef}
-    uniforms={{
-      uTime: { value: 0.0 }
-    }}
-    vertexShader={`
-      uniform float uTime;
-      void main() {
-        gl_PointSize = 2.0;
-        vec3 pos = position;
-        float variation = sin(uTime * 8.0 + pos.y * 0.2) * 0.4;
-        pos.x += fract(variation * 2.0);
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-      }
-    `}
-    fragmentShader={`
-      varying vec3 vNormal;
-      uniform float uTime;
-      void main() {
-        vec3 col = vec3(1.0, 2.0, 3.0);
-        vec3 variation = 0.5 * col;
-        gl_FragColor = vec4(variation, 1.0);
-      }
-    `}
-    transparent
-    />
+  <T.MeshBasicMaterial
+    wireframe
+  />
+  <!-- <T.ShaderMaterial  -->
+  <!--   bind:ref={shaderMaterialRef} -->
+  <!--   uniforms={{ -->
+  <!--     uTime: { value: 0.0 } -->
+  <!--   }} -->
+  <!--   vertexShader={` -->
+  <!--     uniform float uTime; -->
+  <!--     void main() { -->
+  <!--       gl_PointSize = 2.0; -->
+  <!--       vec3 pos = position; -->
+  <!--       float variation = sin(uTime * 8.0 + pos.y * 0.2) * 0.4; -->
+  <!--       pos.x += fract(variation * 2.0); -->
+  <!--       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0); -->
+  <!--     } -->
+  <!--   `} -->
+  <!--   fragmentShader={` -->
+  <!--     varying vec3 vNormal; -->
+  <!--     uniform float uTime; -->
+  <!--     void main() { -->
+  <!--       vec3 col = vec3(1.0, 2.0, 3.0); -->
+  <!--       vec3 variation = 0.5 * col; -->
+  <!--       gl_FragColor = vec4(variation, 1.0); -->
+  <!--     } -->
+  <!--   `} -->
+  <!--   transparent -->
+  <!--   /> -->
 </T.Points>
 {/await}
 
