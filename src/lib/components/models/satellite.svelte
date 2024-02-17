@@ -7,10 +7,12 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
   import { Group, ShaderMaterial } from 'three'
   import { T, forwardEventHandlers } from '@threlte/core'
   import { useGltf } from '@threlte/extras'
+  import HolographicMaterial from '$lib/materials/HolographicMaterial.js'
   import { onMount } from 'svelte';
 
   export const ref = new Group()
 
+  const holographicMaterial = new HolographicMaterial()
   const gltf = useGltf('/models/satellite.glb', { useDraco: true})
 
   const component = forwardEventHandlers()
@@ -22,99 +24,134 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     <slot name="fallback" />
   {:then gltf}
     <T.Group position={[-0.6, 0.73, -0.32]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={0.01}>
-      <T.Points geometry={gltf.nodes.Mesh011.geometry} material={gltf.materials['battery_holder.004']} />
-      <T.Points geometry={gltf.nodes.Mesh011_1.geometry} material={gltf.materials.battery_cells} />
-      <T.Points geometry={gltf.nodes.Mesh011_2.geometry} material={gltf.materials['battery_holder.008']} />
-      <T.Points geometry={gltf.nodes.Mesh011_3.geometry} material={gltf.materials.side_panels} />
-      <T.Points geometry={gltf.nodes.Mesh011_4.geometry} material={gltf.materials.batter_pcb_plate} />
+      <T.Mesh geometry={gltf.nodes.Mesh011.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Mesh011_1.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Mesh011_2.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Mesh011_3.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Mesh011_4.geometry} material={holographicMaterial} />
     </T.Group>
     <T.Group position={[0.26, 0.66, 0.47]} rotation={[-Math.PI / 2, -Math.PI / 2, 0]} scale={0.01}>
-      <T.Points geometry={gltf.nodes.Magnetometer001.geometry} >
-        <T.ShaderMaterial
-          vertexShader={`
-            void main() {
-              gl_PointSize = 2.0;
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-`}
-        />
-      </T.Points>
-      <T.Points geometry={gltf.nodes.Magnetometer001_1.geometry} material={gltf.materials['pins_holder.002']} />
-      <T.Points geometry={gltf.nodes.Magnetometer001_2.geometry} material={gltf.materials['pins.005']} />
-      <T.Points geometry={gltf.nodes.Magnetometer001_3.geometry} material={gltf.materials['holder.002']} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer001.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer001_1.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer001_2.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer001_3.geometry} material={holographicMaterial} />
     </T.Group>
     <T.Group position={[0.4, 0.66, -0.27]} rotation={[Math.PI, 0, Math.PI / 2]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Magnetometer002.geometry} material={gltf.materials['body.002']} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer002_1.geometry} material={gltf.materials['pins_holder.002']} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer002_2.geometry} material={gltf.materials['pins.005']} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer002_3.geometry} material={gltf.materials['holder.002']} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer002.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer002_1.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer002_2.geometry} material={holographicMaterial} />
+      <T.Mesh geometry={gltf.nodes.Magnetometer002_3.geometry} material={holographicMaterial} />
     </T.Group>
     <T.Mesh
       geometry={gltf.nodes['mid_panel-2'].geometry}
-      material={gltf.materials['side_panels.001']}
+      material={holographicMaterial}
       position={[-1.44, 0.66, 0]}
       rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
       scale={0.01}
     />
     <T.Group position={[1.21, 0.64, 0.06]} rotation={[0, -1.57, 0]} scale={0.01}>
-      <T.Points geometry={gltf.nodes.Payload001.geometry}>
+      <T.Mesh geometry={gltf.nodes.Payload001.geometry}>
         <T.ShaderMaterial 
-        wireframe
-        vertexShader={`
-          void main() {
-            gl_PointSize = 6.0;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-          `}
-        />
-      </T.Points>
-      <T.Points geometry={gltf.nodes.Payload001_1.geometry} material={gltf.materials['pins.002']} />
-      <T.Points geometry={gltf.nodes.Payload001_2.geometry} material={gltf.materials['pin_holders.001']} />
-      <T.Points geometry={gltf.nodes.Payload001_3.geometry} material={gltf.materials['lens.001']} />
+          fragmentShader={`
+            varying vec2 vUv;
+            void main() {
+              vec3 color = vec3(1.0, 2.0, 3.0);
+              vec3 variation = 0.5 * color;
+              gl_FragColor = vec4(variation, 1.0);
+            }
+`}
+          wireframe />
+      </T.Mesh>
+      <T.Mesh geometry={gltf.nodes.Payload001_1.geometry} >
+        <T.ShaderMaterial 
+          fragmentShader={`
+            varying vec2 vUv;
+            void main() {
+              vec3 color = vec3(1.0, 2.0, 3.0);
+              vec3 variation = 0.5 * color;
+              gl_FragColor = vec4(variation, 1.0);
+            }
+`}
+          wireframe />
+      </T.Mesh>
+      <T.Mesh geometry={gltf.nodes.Payload001_2.geometry} >
+        <T.ShaderMaterial 
+          fragmentShader={`
+            varying vec2 vUv;
+            void main() {
+              vec3 color = vec3(1.0, 2.0, 3.0);
+              vec3 variation = 0.5 * color;
+              gl_FragColor = vec4(variation, 1.0);
+            }
+`}
+          wireframe />
+      </T.Mesh>
+      <T.Mesh geometry={gltf.nodes.Payload001_3.geometry} >
+        <T.ShaderMaterial 
+          fragmentShader={`
+            varying vec2 vUv;
+            void main() {
+              vec3 color = vec3(1.0, 2.0, 3.0);
+              vec3 variation = 0.5 * color;
+              gl_FragColor = vec4(variation, 1.0);
+            }
+`}
+          wireframe />
+      </T.Mesh>
     </T.Group>
     <T.Mesh
       geometry={gltf.nodes.side_panel.geometry}
-      material={gltf.materials['side_panels.001']}
       position={[0.42, 0.46, 0.06]}
       rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
       scale={0.01}
-    />
+    >
+        <T.ShaderMaterial 
+          fragmentShader={`
+            varying vec2 vUv;
+            void main() {
+              vec3 color = vec3(3.0, 2.0, 1.0);
+              vec3 variation = 0.5 * color;
+              gl_FragColor = vec4(variation, 1.0);
+            }
+`}
+          wireframe />
+      </T.Mesh>
     <T.Mesh
       geometry={gltf.nodes.thin_panel_1.geometry}
-      material={gltf.materials['side_panels.001']}
+      material={holographicMaterial}
       position={[-3.21, 2.94, -0.8]}
       rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
       scale={0.01}
     />
     <T.Mesh
       geometry={gltf.nodes.thin_panel_2.geometry}
-      material={gltf.materials['side_panels.001']}
+      material={holographicMaterial}
       position={[-0.14, 0.66, -0.01]}
       rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
       scale={0.01}
     />
     <T.Mesh
       geometry={gltf.nodes.Cube009.geometry}
-      material={gltf.materials.imu_cube}
+      material={holographicMaterial}
       position={[0.87, 0.77, -0.19]}
       scale={[0.12, 0.17, 0.13]}
     />
     <T.Mesh
       geometry={gltf.nodes.Cube010.geometry}
-      material={gltf.materials.imu_cube}
+      material={holographicMaterial}
       position={[0.87, 0.77, 0.14]}
       scale={[0.12, 0.17, 0.13]}
     />
     <T.Mesh
       geometry={gltf.nodes['magnetorquer_1(stl)'].geometry}
-      material={gltf.materials['pin_holders.001']}
+      material={holographicMaterial}
       position={[0.74, 0.88, -0.35]}
       rotation={[0, 0, -Math.PI / 2]}
       scale={[0.02, 0.01, 0.02]}
     />
     <T.Mesh
       geometry={gltf.nodes['magnetorquer_1(stl)001'].geometry}
-      material={gltf.materials['pin_holders.001']}
+      material={holographicMaterial}
       position={[0.76, 1.31, -0.66]}
       rotation={[Math.PI / 2, -Math.PI / 2, 0]}
       scale={[0.02, 0.01, 0.02]}
