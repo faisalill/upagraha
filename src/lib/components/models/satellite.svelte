@@ -4,157 +4,189 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 -->
 
 <script>
-  import { Group, ShaderMaterial } from 'three'
+  import { Group } from 'three'
   import { T, forwardEventHandlers } from '@threlte/core'
-  import { useGltf } from '@threlte/extras'
-  import HolographicMaterial from '$lib/materials/HolographicMaterial.js'
-  import { onMount } from 'svelte';
+  import { useGltf, TransformControls } from '@threlte/extras'
 
   export const ref = new Group()
 
-  const holographicMaterial = new HolographicMaterial()
-  const gltf = useGltf('/models/satellite.glb', { useDraco: true})
+  const gltf = useGltf('/models/satellite.glb')
 
   const component = forwardEventHandlers()
-
 </script>
 
 <T is={ref} dispose={false} {...$$restProps} bind:this={$component}>
   {#await gltf}
     <slot name="fallback" />
   {:then gltf}
-    <T.Group position={[-0.6, 0.73, -0.32]} rotation={[Math.PI / 2, 0, Math.PI / 2]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Mesh011.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_1.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_2.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_3.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Mesh011_4.geometry} material={holographicMaterial} />
-    </T.Group>
-    <T.Group position={[0.26, 0.66, 0.47]} rotation={[-Math.PI / 2, -Math.PI / 2, 0]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Magnetometer001.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer001_1.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer001_2.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer001_3.geometry} material={holographicMaterial} />
-    </T.Group>
-    <T.Group position={[0.4, 0.66, -0.27]} rotation={[Math.PI, 0, Math.PI / 2]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Magnetometer002.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer002_1.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer002_2.geometry} material={holographicMaterial} />
-      <T.Mesh geometry={gltf.nodes.Magnetometer002_3.geometry} material={holographicMaterial} />
+    <T.Group position={[0.31, 4.27, -1.04]} scale={10.61}>
+      <T.Mesh
+        geometry={gltf.nodes.Battery_Shield_v20_Component21_Placa1_Body2001_Default00.geometry}
+        material={gltf.nodes.Battery_Shield_v20_Component21_Placa1_Body2001_Default00.material}
+        position={[-0.07, 0.01, 0.11]}
+        rotation={[1.59, -0.34, 0.56]}
+        scale={1.29}
+      />
     </T.Group>
     <T.Mesh
-      geometry={gltf.nodes['mid_panel-2'].geometry}
-      material={holographicMaterial}
-      position={[-1.44, 0.66, 0]}
-      rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+      geometry={gltf.nodes.magnetometer_2_handle.geometry}
+      material={gltf.nodes.magnetometer_2_handle.material}
+      position={[0.46, 3.95, -0.05]}
+      rotation={[-0.19, -0.52, 1.17]}
       scale={0.01}
     />
-    <T.Group position={[1.21, 0.64, 0.06]} rotation={[0, -1.57, 0]} scale={0.01}>
-      <T.Mesh geometry={gltf.nodes.Payload001.geometry}>
-        <T.ShaderMaterial 
-          fragmentShader={`
-            varying vec2 vUv;
-            void main() {
-              vec3 color = vec3(1.0, 2.0, 3.0);
-              vec3 variation = 0.5 * color;
-              gl_FragColor = vec4(variation, 1.0);
-            }
-`}
-          wireframe />
-      </T.Mesh>
-      <T.Mesh geometry={gltf.nodes.Payload001_1.geometry} >
-        <T.ShaderMaterial 
-          fragmentShader={`
-            varying vec2 vUv;
-            void main() {
-              vec3 color = vec3(1.0, 2.0, 3.0);
-              vec3 variation = 0.5 * color;
-              gl_FragColor = vec4(variation, 1.0);
-            }
-`}
-          wireframe />
-      </T.Mesh>
-      <T.Mesh geometry={gltf.nodes.Payload001_2.geometry} >
-        <T.ShaderMaterial 
-          fragmentShader={`
-            varying vec2 vUv;
-            void main() {
-              vec3 color = vec3(1.0, 2.0, 3.0);
-              vec3 variation = 0.5 * color;
-              gl_FragColor = vec4(variation, 1.0);
-            }
-`}
-          wireframe />
-      </T.Mesh>
-      <T.Mesh geometry={gltf.nodes.Payload001_3.geometry} >
-        <T.ShaderMaterial 
-          fragmentShader={`
-            varying vec2 vUv;
-            void main() {
-              vec3 color = vec3(1.0, 2.0, 3.0);
-              vec3 variation = 0.5 * color;
-              gl_FragColor = vec4(variation, 1.0);
-            }
-`}
-          wireframe />
-      </T.Mesh>
-    </T.Group>
+    <T.Mesh
+      geometry={gltf.nodes['mid_panel-2'].geometry}
+      material={gltf.nodes['mid_panel-2'].material}
+      rotation={[-1.55, 0.34, -2.13]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.payload_lens.geometry}
+      material={gltf.nodes.payload_lens.material}
+      position={[0.75, 3.59, 0.68]}
+      rotation={[-2.63, -0.93, -2.55]}
+      scale={0.01}
+    />
     <T.Mesh
       geometry={gltf.nodes.side_panel.geometry}
-      position={[0.42, 0.46, 0.06]}
-      rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+      material={gltf.nodes.side_panel.material}
+      position={[0.06, 3.65, 0.26]}
+      rotation={[-1.55, 0.34, -2.13]}
       scale={0.01}
-    >
-        <T.ShaderMaterial 
-          fragmentShader={`
-            varying vec2 vUv;
-            void main() {
-              vec3 color = vec3(3.0, 2.0, 1.0);
-              vec3 variation = 0.5 * color;
-              gl_FragColor = vec4(variation, 1.0);
-            }
-`}
-          wireframe />
-      </T.Mesh>
+    />
     <T.Mesh
       geometry={gltf.nodes.thin_panel_1.geometry}
-      material={holographicMaterial}
-      position={[-3.21, 2.94, -0.8]}
-      rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+      material={gltf.nodes.thin_panel_1.material}
+      position={[0.4, 3.73, 0.36]}
+      rotation={[-1.55, 0.34, -2.13]}
       scale={0.01}
     />
     <T.Mesh
       geometry={gltf.nodes.thin_panel_2.geometry}
-      material={holographicMaterial}
-      position={[-0.14, 0.66, -0.01]}
-      rotation={[-Math.PI / 2, 0, -Math.PI / 2]}
+      material={gltf.nodes.thin_panel_2.material}
+      position={[-0.29, 3.99, -0.09]}
+      rotation={[-1.55, 0.34, -2.13]}
       scale={0.01}
     />
     <T.Mesh
-      geometry={gltf.nodes.Cube009.geometry}
-      material={holographicMaterial}
-      position={[0.87, 0.77, -0.19]}
+      geometry={gltf.nodes.MCU_1.geometry}
+      material={gltf.nodes.MCU_1.material}
+      position={[0.65, 3.76, 0.29]}
+      rotation={[-0.19, -0.52, -0.4]}
       scale={[0.12, 0.17, 0.13]}
     />
     <T.Mesh
-      geometry={gltf.nodes.Cube010.geometry}
-      material={holographicMaterial}
-      position={[0.87, 0.77, 0.14]}
+      geometry={gltf.nodes.MCU_2.geometry}
+      material={gltf.nodes.MCU_2.material}
+      position={[0.48, 3.82, 0.57]}
+      rotation={[-0.19, -0.52, -0.4]}
       scale={[0.12, 0.17, 0.13]}
     />
     <T.Mesh
-      geometry={gltf.nodes['magnetorquer_1(stl)'].geometry}
-      material={holographicMaterial}
-      position={[0.74, 0.88, -0.35]}
-      rotation={[0, 0, -Math.PI / 2]}
+      geometry={gltf.nodes.magnetorquer_1.geometry}
+      material={gltf.nodes.magnetorquer_1.material}
+      position={[1.61, 3.38, 0.6]}
+      rotation={[-0.19, -0.52, -1.97]}
       scale={[0.02, 0.01, 0.02]}
     />
     <T.Mesh
-      geometry={gltf.nodes['magnetorquer_1(stl)001'].geometry}
-      material={holographicMaterial}
-      position={[0.76, 1.31, -0.66]}
-      rotation={[Math.PI / 2, -Math.PI / 2, 0]}
+      geometry={gltf.nodes.magnetorquer_2.geometry}
+      material={gltf.nodes.magnetorquer_2.material}
+      position={[0.48, 4.24, 0.82]}
+      rotation={[-2.63, -0.93, 2.17]}
       scale={[0.02, 0.01, 0.02]}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.battery_holder.geometry}
+      material={gltf.nodes.battery_holder.material}
+      position={[-0.63, 4.19, -0.34]}
+      rotation={[1.59, -0.34, 2.13]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.payload_body.geometry}
+      material={gltf.nodes.payload_body.material}
+      position={[0.79, 3.6, 0.66]}
+      rotation={[-2.63, -0.93, -2.55]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.payload_pins.geometry}
+      material={gltf.nodes.payload_pins.material}
+      position={[0.75, 3.59, 0.68]}
+      rotation={[-2.63, -0.93, -2.55]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.magnetometer_2001.geometry}
+      material={gltf.nodes.magnetometer_2001.material}
+      position={[0.39, 3.63, -0.03]}
+      rotation={[-0.19, -0.52, 1.17]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.magnetometer_1_handle.geometry}
+      material={gltf.nodes.magnetometer_1_handle.material}
+      position={[-0.05, 3.89, 0.52]}
+      rotation={[0.51, 0.93, 0.97]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.magnetometer_2004.geometry}
+      material={gltf.nodes.magnetometer_2004.material}
+      position={[-0.05, 3.89, 0.52]}
+      rotation={[0.51, 0.93, 0.97]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.solar_panels_right.geometry}
+      material={gltf.nodes.solar_panels_right.material}
+      position={[0.65, 4.37, -1.02]}
+      rotation={[-1.55, 0.34, -2.13]}
+      scale={-0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.solar_cells_right.geometry}
+      material={gltf.nodes.solar_cells_right.material}
+      position={[0.4, 4.41, -0.72]}
+      rotation={[-1.55, 0.34, 1.01]}
+      scale={-0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.solar_panels_left.geometry}
+      material={gltf.nodes.solar_panels_left.material}
+      position={[-0.52, 4.76, 0.99]}
+      rotation={[-1.55, 0.34, -2.13]}
+      scale={-0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.solar_cells_left.geometry}
+      material={gltf.nodes.solar_cells_left.material}
+      position={[-0.4, 4.67, 0.67]}
+      rotation={[-1.55, 0.34, -2.13]}
+      scale={-0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.top_panel.geometry}
+      material={gltf.nodes.top_panel.material}
+      position={[0.36, 4.46, 0.18]}
+      rotation={[0.51, 0.93, 2.55]}
+      scale={-0.18}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.payload_knob.geometry}
+      material={gltf.nodes.payload_knob.material}
+      position={[0.75, 3.59, 0.68]}
+      rotation={[-2.63, -0.93, -2.55]}
+      scale={0.01}
+    />
+    <T.Mesh
+      geometry={gltf.nodes.battery_plate.geometry}
+      material={gltf.nodes.battery_plate.material}
+      position={[-0.39, 4.11, -0.74]}
+      rotation={[1.59, -0.34, 2.13]}
+      scale={0.4}
     />
   {:catch error}
     <slot name="error" {error} />
