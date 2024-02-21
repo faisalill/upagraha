@@ -10,12 +10,12 @@ const { scene } = useThrelte();
 const rgbeLoader = new RGBELoader();
 let camRef;
 
-// onMount(()=> {
-//   rgbeLoader.load('/textures/envMap.hdr', (texture) => {
-//     texture.mapping = EquirectangularReflectionMapping;
-//     scene.environment = texture;
-//   });
-// })
+onMount(()=> {
+  rgbeLoader.load('/textures/envMap.hdr', (texture) => {
+    texture.mapping = EquirectangularReflectionMapping;
+    scene.environment = texture;
+  });
+})
 </script>
 
 <T.AmbientLight intensity={20.5} />

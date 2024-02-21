@@ -7,14 +7,29 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
   import { Group } from 'three'
   import { T, forwardEventHandlers } from '@threlte/core'
   import { useGltf } from '@threlte/extras'
+  import { SheetObject, useSequence } from '@threlte/theatre';
+  import { onMount } from 'svelte';
 
   export const ref = new Group()
+
+  const { position, playing, length, play, pause, config } = useSequence();
+  
+  onMount(() => {
+    console.log($length)
+    $position = 0.5
+  })
 
   const gltf = useGltf('/models/satellite.glb', { useDraco: true })
 
   const component = forwardEventHandlers()
 </script>
 
+
+<SheetObject
+ key="Satellite"
+ let:Transform
+>
+<Transform>
 <T is={ref} dispose={false} {...$$restProps} bind:this={$component}>
   {#await gltf}
     <slot name="fallback" />
@@ -170,3 +185,5 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
   <slot {ref} />
 </T>
+</Transform>
+</SheetObject>
