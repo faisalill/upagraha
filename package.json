@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "model-pipeline:run": "node scripts/model-pipeline.js"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
@@ -22,6 +23,7 @@
   },
   "type": "module",
   "dependencies": {
-    "dat.gui": "^0.7.9"
+    "dat.gui": "^0.7.9",
+    "motion": "^10.17.0"
   }
 }
