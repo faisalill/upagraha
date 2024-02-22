@@ -12,12 +12,6 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
   export const ref = new Group()
 
-  const { position, playing, length, play, pause, config } = useSequence();
-  
-  onMount(() => {
-    console.log($length)
-    $position = 0.5
-  })
 
   const gltf = useGltf('/models/satellite.glb', { useDraco: true })
 
@@ -25,11 +19,6 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 </script>
 
 
-<SheetObject
- key="Satellite"
- let:Transform
->
-<Transform>
 <T is={ref} dispose={false} {...$$restProps} bind:this={$component}>
   {#await gltf}
     <slot name="fallback" />
@@ -185,5 +174,3 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
   <slot {ref} />
 </T>
-</Transform>
-</SheetObject>

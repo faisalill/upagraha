@@ -5,7 +5,5 @@
 </script>
 
 <Canvas>
-  <Theatre>
     <Scene />
-  </Theatre>
 </Canvas>
