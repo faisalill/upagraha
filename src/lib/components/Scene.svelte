@@ -43,9 +43,6 @@ onMount(()=> {
       position={[9.525449, 3.648321, 0.55692857]} 
       lookAt={[values.lookAtX, values.lookAtY, values.lookAtZ]}
     >
-        <OrbitControls 
-          enableDamping 
-          />
     </T.PerspectiveCamera>
   </Transform>
 </Declare>

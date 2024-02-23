@@ -58,10 +58,13 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
     <T.Mesh
       geometry={gltf.nodes.payload_lens.geometry}
-      material={gltf.nodes.payload_lens.material}
       position={[0.75, 3.59, 0.68]}
       rotation={[-2.63, -0.93, -2.55]}
-    />
+    >
+      <T.MeshStandardMaterial color="#188196">
+            <Sync color />
+      </T.MeshStandardMaterial>
+    </T.Mesh>
           
     <T.Mesh
       geometry={gltf.nodes.side_panel.geometry}
