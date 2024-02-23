@@ -9,7 +9,8 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
   import { scroll } from '$lib/stores/pages.js';
   import { useGltf } from '@threlte/extras'
   import { onMount } from 'svelte';
-  import { Group } from 'three'
+  import { Group, Mesh } from 'three'
+  import { MeshStandardMaterial } from 'three';
   import { gsap } from 'gsap'
 
   export const ref = new Group()
@@ -20,7 +21,7 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
   onMount(() => {
     window.addEventListener('scroll', () =>{
-      $position = $scroll.scrollY * $length;
+      // $position = $scroll.scrollY * $length;
     }) 
   })
 
@@ -29,6 +30,7 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 <SheetObject
  key="Satellite"
  let:Transform
+ let:Sync
 >
 <Transform>
 <T is={ref} dispose={false} {...$$restProps} bind:this={$component}>
@@ -37,149 +39,220 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
   {:then gltf}
     <T.Mesh
       geometry={gltf.nodes.top_panel.geometry}
-      material={gltf.nodes.top_panel.material}
-      position={[0.38, 4.44, 0.19]}
+      position={[0.38, 4.45, 0.19]}
       rotation={[0.51, 0.93, 2.55]}
-      scale={-0.18}
-    />
+      scale={0}
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes['mid_panel-2'].geometry}
-      material={gltf.nodes['mid_panel-2'].material}
       position={[0, 0, 0]}
       rotation={[-1.557, 0.34, -2.13]}
-    />
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.payload_lens.geometry}
       material={gltf.nodes.payload_lens.material}
       position={[0.75, 3.59, 0.68]}
       rotation={[-2.63, -0.93, -2.55]}
     />
+          
     <T.Mesh
       geometry={gltf.nodes.side_panel.geometry}
-      material={gltf.nodes.side_panel.material}
       position={[0.06, 3.65, 0.26]}
       rotation={[-1.55, 0.34, -2.13]}
-    />
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.thin_panel_1.geometry}
-      material={gltf.nodes.thin_panel_1.material}
       position={[0.4, 3.73, 0.36]}
       rotation={[-1.55, 0.34, -2.13]}
-    />
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.thin_panel_2.geometry}
-      material={gltf.nodes.thin_panel_2.material}
       position={[-0.29, 3.99, -0.09]}
       rotation={[-1.55, 0.34, -2.13]}
-    />
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.MCU_1.geometry}
-      material={gltf.nodes.MCU_1.material}
       position={[0.65, 3.76, 0.29]}
       rotation={[-0.19, -0.52, -0.4]}
-    />
+    >
+      <T.MeshStandardMaterial color="#47183a">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.MCU_2.geometry}
-      material={gltf.nodes.MCU_2.material}
       position={[0.48, 3.82, 0.57]}
       rotation={[-0.19, -0.52, -0.4]}
-    />
+    >
+      <T.MeshStandardMaterial color="#47183a">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.magnetorquer_1.geometry}
-      material={gltf.nodes.magnetorquer_1.material}
       position={[1.61, 3.38, 0.6]}
       rotation={[-0.19, -0.52, -1.97]}
-    />
+    >
+      <T.MeshStandardMaterial color="#000000">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.magnetorquer_2.geometry}
-      material={gltf.nodes.magnetorquer_2.material}
       position={[0.48, 4.24, 0.82]}
       rotation={[-2.63, -0.93, 2.17]}
-    />
+    >
+      <T.MeshStandardMaterial color="#000000">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.payload_body.geometry}
-      material={gltf.nodes.payload_body.material}
       position={[0.79, 3.6, 0.66]}
       rotation={[-2.63, -0.93, -2.55]}
-    />
+    >
+      <T.MeshStandardMaterial color="#000000">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.payload_pins.geometry}
-      material={gltf.nodes.payload_pins.material}
       position={[0.75, 3.59, 0.68]}
       rotation={[-2.63, -0.93, -2.55]}
-    />
-    <T.Mesh
-      geometry={gltf.nodes.magnetometer_1.geometry}
-      material={gltf.nodes.magnetometer_1.material}
-      position={[-0.13, 3.68, 0.28]}
-      rotation={[0.51, 0.93, 0.97]}
-    />
+    >
+      <T.MeshStandardMaterial color="#5b5b5b">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.payload_knob.geometry}
-      material={gltf.nodes.payload_knob.material}
       position={[0.75, 3.59, 0.68]}
       rotation={[-2.63, -0.93, -2.55]}
-    />
+    >
+      <T.MeshStandardMaterial color="#5b5b5b">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
-      geometry={gltf.nodes.magnetometer_2.geometry}
-      material={gltf.nodes.magnetometer_2.material}
-      position={[0.11, 3.6, -0.12]}
-      rotation={[-2.63, -0.93, -0.97]}
-    />
-    <T.Mesh
-      geometry={gltf.nodes.magnetometer_2_handle.geometry}
-      material={gltf.nodes.magnetometer_2_handle.material}
-      position={[0.11, 3.6, -0.12]}
-      rotation={[-2.63, -0.93, -0.97]}
-    />
-    <T.Mesh
-      geometry={gltf.nodes.magnetometer_1_handle.geometry}
-      material={gltf.nodes.magnetometer_1_handle.material}
+      geometry={gltf.nodes.magnetometer_1.geometry}
       position={[-0.13, 3.68, 0.28]}
       rotation={[0.51, 0.93, 0.97]}
-    />
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
+    <T.Mesh
+      geometry={gltf.nodes.magnetometer_2.geometry}
+      position={[0.11, 3.6, -0.12]}
+      rotation={[-2.63, -0.93, -0.97]}
+    >
+      <T.MeshStandardMaterial color="#434343">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
+    <T.Mesh
+      geometry={gltf.nodes.magnetometer_2_handle.geometry}
+      position={[0.11, 3.6, -0.12]}
+      rotation={[-2.63, -0.93, -0.97]}
+    >
+      <T.MeshStandardMaterial color="#2d2d2d">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
+    <T.Mesh
+      geometry={gltf.nodes.magnetometer_1_handle.geometry}
+      position={[-0.13, 3.68, 0.28]}
+      rotation={[0.51, 0.93, 0.97]}
+    >
+      <T.MeshStandardMaterial color="#2d2d2d">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.battery_holder.geometry}
-      material={gltf.nodes.battery_holder.material}
       position={[-0.65, 4.13, -0.34]}
       rotation={[1.59, -0.34, 2.13]}
-    />
+    >
+      <T.MeshStandardMaterial color="#000000">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.battery_plate.geometry}
-      material={gltf.nodes.battery_plate.material}
       position={[-0.65, 4.13, -0.34]}
       rotation={[1.59, -0.34, 2.13]}
-    />
+    >
+      <T.MeshStandardMaterial color="#472200">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.battery_cells.geometry}
-      material={gltf.nodes.battery_cells.material}
       position={[-0.65, 4.13, -0.34]}
       rotation={[1.59, -0.34, 2.13]}
-    />
-    <T.Mesh
-      geometry={gltf.nodes.solar_cells_right.geometry}
-      material={gltf.nodes.solar_cells_right.material}
-      position={[-0.82, 4.93, -2.43]}
-      rotation={[-1.55, 0.34, 1.01]}
-    />
+    >
+      <T.MeshStandardMaterial color="#473100">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
+          
     <T.Mesh
       geometry={gltf.nodes.solar_panel_right.geometry}
-      material={gltf.nodes.solar_panel_right.material}
       position={[-0.82, 4.93, -2.43]}
       rotation={[-1.55, 0.34, 1.01]}
-    />
-    <T.Mesh
-      geometry={gltf.nodes.solar_cells_left.geometry}
-      material={gltf.nodes.solar_cells_left.material}
-      position={[-2.03, 5.32, -0.37]}
-      rotation={[-1.55, 0.34, 1.01]}
-    />
+    >
+      <T.MeshStandardMaterial color="#003009">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.solar_panel_left.geometry}
-      material={gltf.nodes.solar_panel_left.material}
       position={[-2.03, 5.32, -0.37]}
       rotation={[-1.55, 0.34, 1.01]}
-    />
+    >
+      <T.MeshStandardMaterial color="#003009">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
+    <T.Mesh
+      geometry={gltf.nodes.solar_cells_left.geometry}
+      position={[-2.03, 5.32, -0.37]}
+      rotation={[-1.55, 0.34, 1.01]}
+    >
+      <T.MeshStandardMaterial color="#043843">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
+    <T.Mesh
+      geometry={gltf.nodes.solar_cells_right.geometry}
+      position={[-0.82, 4.93, -2.43]}
+      rotation={[-1.55, 0.34, 1.01]}
+    >
+      <T.MeshStandardMaterial color="#043843">
+      </T.MeshStandardMaterial>
+    </T.Mesh>
+
   {:catch error}
     <slot name="error" {error} />
   {/await}

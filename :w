@@ -40,25 +40,16 @@ onMount(()=> {
   <Transform>
     <T.PerspectiveCamera 
       makeDefault 
-      position={[9.525449, 3.648321, 0.55692857]} 
+      position={[0, 0, 0]} 
       lookAt={[values.lookAtX, values.lookAtY, values.lookAtZ]}
     >
-        <OrbitControls 
-          enableDamping 
-          />
+      <OrbitControls enableDamping />
     </T.PerspectiveCamera>
   </Transform>
 </Declare>
 </SheetObject>
 
-<Float
-floatIntensity={1}
-rotationIntensity={0.2}
-rotationSpeed={6}
-speed={6}
->
 <Satellite position={[0, 0, 0]} />
-</Float>
 
 <Grid>
 </Grid>
