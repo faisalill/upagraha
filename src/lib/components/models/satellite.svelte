@@ -4,21 +4,33 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 -->
 
 <script>
-  import { Group } from 'three'
-  import { T, forwardEventHandlers } from '@threlte/core'
-  import { useGltf } from '@threlte/extras'
   import { SheetObject, useSequence } from '@threlte/theatre';
+  import { T, forwardEventHandlers } from '@threlte/core'
+  import { scroll } from '$lib/stores/pages.js';
+  import { useGltf } from '@threlte/extras'
   import { onMount } from 'svelte';
+  import { Group } from 'three'
+  import { gsap } from 'gsap'
 
   export const ref = new Group()
 
-
   const gltf = useGltf('/models/satellite.glb', { useDraco: true })
-
   const component = forwardEventHandlers()
+  const { position, length } = useSequence();
+
+  onMount(() => {
+    window.addEventListener('scroll', () =>{
+      $position = $scroll.scrollY * $length;
+    }) 
+  })
+
 </script>
 
-
+<SheetObject
+ key="Satellite"
+ let:Transform
+>
+<Transform>
 <T is={ref} dispose={false} {...$$restProps} bind:this={$component}>
   {#await gltf}
     <slot name="fallback" />
@@ -174,3 +186,5 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
   <slot {ref} />
 </T>
+</Transform>
+</SheetObject>

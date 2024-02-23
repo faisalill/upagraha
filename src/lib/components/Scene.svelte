@@ -8,7 +8,6 @@ import { onMount } from 'svelte';
 
 const { scene } = useThrelte();
 const rgbeLoader = new RGBELoader();
-let camRef;
 
 onMount(()=> {
   rgbeLoader.load('/textures/envMap.hdr', (texture) => {
@@ -21,16 +20,9 @@ onMount(()=> {
 <T.AmbientLight intensity={20.5} />
 <T.DirectionalLight intensity={20.5} position={[0, 10, 0]} />
 
-<T.PerspectiveCamera makeDefault position={[7.7266769, 5.5387504, 1.043835294]} rotation={[-1.3239, 1.355862, 1.318359351]} 
-  let:ref
->
-  <OrbitControls 
-    on:change={({target}) => console.log(ref)}
-    enableDamping
-  />
+<T.PerspectiveCamera makeDefault position={[7.7266769, 5.5387504, 1.043835294]} rotation={[-1.3239, 1.355862, 1.318359351]} >
 </T.PerspectiveCamera>
 
-<!-- <Satellite_without_top position={[0, 0, 0]} /> -->
 <Satellite position={[0, 0, 0]} />
 
 <Grid>
