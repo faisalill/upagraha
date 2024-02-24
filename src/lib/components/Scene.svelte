@@ -6,7 +6,7 @@ import { BoxGeometry, EquirectangularReflectionMapping } from 'three';
 import Satellite from '$lib/components/models/satellite.svelte'
 import { onMount } from 'svelte';
 import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin'
-import { SheetObject } from '@threlte/theatre';
+import { Sheet, SheetObject } from '@threlte/theatre';
 
 injectLookAtPlugin()
 
@@ -21,8 +21,8 @@ onMount(()=> {
 })
 </script>
 
-<T.AmbientLight intensity={20.5} />
-<T.DirectionalLight intensity={20.5} position={[0, 10, 0]} />
+<T.AmbientLight intensity={8} />
+<T.DirectionalLight intensity={20.5} position={[5, 10, 0]} />
 
 <SheetObject
   key="Camera"
@@ -43,6 +43,9 @@ onMount(()=> {
       position={[9.525449, 3.648321, 0.55692857]} 
       lookAt={[values.lookAtX, values.lookAtY, values.lookAtZ]}
     >
+        <OrbitControls 
+          enableDamping
+          />
     </T.PerspectiveCamera>
   </Transform>
 </Declare>

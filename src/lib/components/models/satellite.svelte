@@ -5,16 +5,16 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
 <script>
   import { SheetObject, useSequence } from '@threlte/theatre';
-  import { T, forwardEventHandlers } from '@threlte/core'
+  import { T, forwardEventHandlers, useFrame } from '@threlte/core'
   import { scroll } from '$lib/stores/pages.js';
-  import { useGltf } from '@threlte/extras'
+  import { useGltf, Edges } from '@threlte/extras'
   import { onMount } from 'svelte';
-  import { Group, Mesh } from 'three'
+  import { ConeGeometry, Group, Mesh, ShaderMaterial } from 'three'
   import { MeshStandardMaterial } from 'three';
   import { gsap } from 'gsap'
 
   export const ref = new Group()
-
+  
   const gltf = useGltf('/models/satellite.glb', { useDraco: true })
   const component = forwardEventHandlers()
   const { position, length } = useSequence();
@@ -24,15 +24,31 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
       // $position = $scroll.scrollY * $length;
     }) 
   })
+ 
+  let objects = {
+    solarCellsRight: null,
+    solarCellsLeft: null,
+    payloadLens: null,
+    lensLight: null
+  }
+
+  useFrame((_, delta) => {
+    if (objects.solarCellsRight) {
+      objects.solarCellsRight.material.uniforms.uTime.value += delta
+    }
+    if (objects.solarCellsLeft) {
+      objects.solarCellsLeft.material.uniforms.uTime.value += delta
+    }
+    if (objects.payloadLens) {
+      objects.payloadLens.material.uniforms.uTime.value += delta
+    }
+    if (objects.lensLight) {
+      objects.lensLight.material.uniforms.uTime.value += delta
+    }
+  })
 
 </script>
 
-<SheetObject
- key="Satellite"
- let:Transform
- let:Sync
->
-<Transform>
 <T is={ref} dispose={false} {...$$restProps} bind:this={$component}>
   {#await gltf}
     <slot name="fallback" />
@@ -41,10 +57,11 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
       geometry={gltf.nodes.top_panel.geometry}
       position={[0.38, 4.45, 0.19]}
       rotation={[0.51, 0.93, 2.55]}
-      scale={0}
+      scale={-0.18}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -60,12 +77,93 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
       geometry={gltf.nodes.payload_lens.geometry}
       position={[0.75, 3.59, 0.68]}
       rotation={[-2.63, -0.93, -2.55]}
+      bind:ref={objects.payloadLens}
     >
-      <T.MeshStandardMaterial color="#188196">
-            <Sync color />
-      </T.MeshStandardMaterial>
+      <T.ShaderMaterial 
+        uniforms={{
+          uTime: { value: 0 }
+        }}
+        vertexShader={`
+        varying vec2 vUv;
+        uniform float uTime;
+        void main() {
+            vUv = position.xy;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `}
+        fragmentShader={`
+        varying vec2 vUv;
+        uniform float uTime;
+        void main() {
+            vec2 newUv = vUv * 0.3; 
+            newUv.x += 0.1;
+            newUv.x *= 5.0;
+            newUv.y += 0.1;
+            newUv.y *= 5.0;
+            newUv.y = 1.0 - newUv.y;
+
+            vec3 variation = vec3(step(0.2, sin(newUv.x * 55.0 + uTime * 10.0)));
+            variation += sin(length(sin(length(vec2(vUv.x + 0.08, vUv.y - 0.01))) * 70.0 + uTime));
+            variation = variation * 0.5;
+            vec3 color = vec3(1.0, 2.0, 3.0); 
+            color *= variation;
+
+            gl_FragColor = vec4(color, 1.0);
+          }
+        `}
+      />
     </T.Mesh>
-          
+
+    <T.Mesh
+      position={[1.623, 3.307, 1.164]}
+      rotation={[125, 0, 125]}
+      lookAt={[-0.5, -3.5, 0]}
+      bind:ref={objects.lensLight}
+    >
+      <T.ConeGeometry
+        args={[0.5, 2, 32]} 
+      />
+        <T.ShaderMaterial 
+        transparent
+        wireframe
+        side={2}
+        uniforms={{
+          uTime: { value: 0 }
+        }}
+        vertexShader={`
+          varying vec2 vUv;
+          uniform float uTime;
+          void main() {
+              vUv = uv;
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `}
+        fragmentShader={`
+          varying vec2 vUv;
+          uniform float uTime;
+          void main() {
+              vec2 newUv = vUv;
+              newUv.y += sin(newUv.x * 10.0 + uTime);
+
+              vec3 variationX = vec3(step(0.5, sin(newUv.x * 50.0))); 
+              variationX += sin(length(newUv.x * 30.0 + uTime));
+              variationX = clamp(variationX, 0.0, 0.9);
+
+              vec3 variationY = vec3(step(0.5, sin(newUv.y * 50.0))); 
+              variationY += sin(length(newUv.y * 30.0 + uTime));
+              variationY = clamp(variationY, 0.0, 0.9);
+              
+              vec3 color = vec3(1.0, 2.0, 3.0);
+              color *= variationX;
+              color *= variationY;
+
+
+              gl_FragColor = vec4(color, newUv.y);
+            }
+        `}
+        />
+    </T.Mesh>
+
     <T.Mesh
       geometry={gltf.nodes.side_panel.geometry}
       position={[0.06, 3.65, 0.26]}
@@ -73,6 +171,7 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -225,8 +324,10 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
       position={[-0.82, 4.93, -2.43]}
       rotation={[-1.55, 0.34, 1.01]}
     >
-      <T.MeshStandardMaterial color="#003009">
-      </T.MeshStandardMaterial>
+      <T.MeshStandardMaterial color="#434343" 
+
+      />
+      <Edges color="cyan" />
     </T.Mesh>
 
     <T.Mesh
@@ -234,26 +335,101 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
       position={[-2.03, 5.32, -0.37]}
       rotation={[-1.55, 0.34, 1.01]}
     >
-      <T.MeshStandardMaterial color="#003009">
+      <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges color="cyan" />
     </T.Mesh>
 
     <T.Mesh
       geometry={gltf.nodes.solar_cells_left.geometry}
       position={[-2.03, 5.32, -0.37]}
       rotation={[-1.55, 0.34, 1.01]}
+      bind:ref={objects.solarCellsLeft}
     >
-      <T.MeshStandardMaterial color="#043843">
-      </T.MeshStandardMaterial>
+      <T.ShaderMaterial 
+        color="#043843"
+        uniforms={{
+          uTime: { value: 0 }
+        }}
+        vertexShader={`
+        varying vec2 vUv;
+        uniform float uTime;
+        void main() {
+            vUv = uv;
+            vec3 newPos = position;
+            newPos.z = position.z + normal.z * 0.03;
+            newPos.z += 0.01;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
+          }
+        `}
+        fragmentShader={`
+        varying vec2 vUv;
+        uniform float uTime;
+        void main() {
+            vec2 newUv = vUv;
+
+            vec3 variationX = vec3(step(0.5, sin(newUv.x * 150.0))); 
+            variationX += sin(length(newUv.x * 10.0 + uTime));
+
+            vec3 variationY = vec3(step(0.5, sin(newUv.y * 150.0))); 
+            variationY += sin(length(newUv.y * 10.0 + uTime));
+        
+            vec3 color = vec3(1.0, 2.0, 4.0); 
+            color *= variationY;
+            color *= variationX;
+
+            gl_FragColor = vec4(color, 1.0);
+          }
+        `}
+        >
+        </T.ShaderMaterial>
+        <Edges color="darkcyan" />
     </T.Mesh>
 
     <T.Mesh
       geometry={gltf.nodes.solar_cells_right.geometry}
       position={[-0.82, 4.93, -2.43]}
       rotation={[-1.55, 0.34, 1.01]}
+      bind:ref={objects.solarCellsRight}
     >
-      <T.MeshStandardMaterial color="#043843">
-      </T.MeshStandardMaterial>
+      <T.ShaderMaterial 
+        color="#043843"
+        uniforms={{
+          uTime: { value: 0 }
+        }}
+        vertexShader={`
+        varying vec2 vUv;
+        uniform float uTime;
+        void main() {
+            vUv = uv;
+            vec3 newPos = position;
+            newPos.z = position.z + normal.z * 0.03;
+            newPos.z += 0.01;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
+          }
+        `}
+        fragmentShader={`
+        varying vec2 vUv;
+        uniform float uTime;
+        void main() {
+            vec2 newUv = vUv;
+            newUv.x += uTime * 0.05;
+
+            vec3 variationX = vec3(step(0.5, sin(newUv.x * 150.0))); 
+            variationX += sin(length(newUv.x * 10.0 + uTime));
+
+            vec3 variationY = vec3(step(0.5, sin(newUv.y * 150.0))); 
+            variationY += sin(length(newUv.y * 10.0 + uTime));
+        
+            vec3 color = vec3(1.0, 2.0, 4.0); 
+            color *= variationY;
+            color *= variationX;
+
+            gl_FragColor = vec4(color, 1.0);
+          }
+        `}
+      />
+      <Edges color="darkcyan" />
     </T.Mesh>
 
   {:catch error}
@@ -262,5 +438,3 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
   <slot {ref} />
 </T>
-</Transform>
-</SheetObject>
