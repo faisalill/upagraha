@@ -31,8 +31,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgb(13, 19, 32);
-    background: linear-gradient(180deg, rgba(13, 19, 32, 1) 0%, rgba(8, 12, 21, 1) 100%    );
+    background: rgb(0, 0, 0);
     overflow-x: hidden;
   }
   .scroll-container {
