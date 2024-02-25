@@ -60,7 +60,7 @@ useFrame((_, delta) => {
   <Transform>
     <T.PerspectiveCamera 
       makeDefault 
-      position={[19.525449, 3.648321, 0.55692857]} 
+      position={[9.525449, 3.648321, 0.55692857]} 
       lookAt={[values.lookAtX, values.lookAtY, values.lookAtZ]}
     >
     </T.PerspectiveCamera>
@@ -134,7 +134,9 @@ bind:ref={eyeCandyBackground}
 >
   <T.PlaneGeometry args={[15, 15]} />
   <T.ShaderMaterial 
+  wireframe={false}
   transparent={true}
+  depthWrite={false}
   uniforms={{
     uTime: { value: 0 }
   }}
@@ -154,7 +156,9 @@ bind:ref={eyeCandyBackground}
     void main() { 
       vec2 newUv = vUv;
       vec3 color = vec3(1.0, 2.0, 3.0);
-      color = color * random(vUv * 0.1 + uTime * 0.1);
+      color.r = sin(uTime + length(vUv) * 10.0) * 0.5 + 0.5;
+      color.g = cos(uTime + length(vUv) * 10.0) * 0.5 + 0.5;
+
       vec3 final = vec3(length(newUv - 0.5));
       final = 0.11 / final;
       final = smoothstep(0.25, 0.70, final);
