@@ -5,7 +5,7 @@ import { DoubleSide, Color } from 'three'
 
 const map = useTexture('/textures/star.png')
 
-const starsCount = 400;
+const starsCount = 200;
 let stars = [];
 const starColors = [ '#f0c74f', '#6C9897', '#ff0000', '#ffffff', '#112d28']
 
@@ -19,16 +19,16 @@ for (let i = 0; i < starsCount; i++) {
     scaleX: randomGenerator(1.5, 10),
     color: new Color(starColors[Math.floor(randomGenerator(0, 5))])
     .convertSRGBToLinear()
-    .multiplyScalar(0.7),
+    .multiplyScalar(0.5),
     speed: randomGenerator(1, 5)
   })
 }
 
 useFrame((_, delta) => {
   stars.forEach(star => {
-    star.position[2] += (star.speed + delta) * 0.01;
-    if (star.position[2] > 50) {
-      star.position[2] = -20;
+    star.position[0] += (star.speed + delta) * 0.1;
+    if (star.position[0] > 50) {
+      star.position[0] = -20;
     }
   })
   stars = stars;
@@ -51,7 +51,6 @@ useFrame((_, delta) => {
       <Instance position={[star.position[0], star.position[1], star.position[2]]} 
         scale={[star.scaleX,0.05,1]}
         color={star.color}
-        rotation={[1, 0, 1]}
       />
     {/each}
 
