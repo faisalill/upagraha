@@ -105,6 +105,6 @@ speed={6}
 
 <GalaxyScene 
   position={[-4, 4, 0]}
-  scale = {5}
+  scale = {2.5}
   rotation={[0, 1.5, 0]}
 />
