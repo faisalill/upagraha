@@ -84,16 +84,10 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
     </T.Group>
 
     <T.Group>
-      <SheetObject
-        key="check"
-        let:Sync
-        >
       <T.Mesh geometry={gltf.nodes.shooting_star.geometry}>
         <T.MeshStandardMaterial color="#0000ff">
-            <Sync color />
         </T.MeshStandardMaterial>
       </T.Mesh>
-      </SheetObject>
 
       <T.Mesh
         geometry={gltf.nodes.shooting_star_trajectory.geometry}

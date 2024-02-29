@@ -10,8 +10,7 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
   import { useGltf, Edges } from '@threlte/extras'
   import { onMount } from 'svelte';
   import { ConeGeometry, Group, Mesh, ShaderMaterial } from 'three'
-  import { MeshStandardMaterial } from 'three';
-  import { gsap } from 'gsap'
+  import { initialSatelliteAnimation } from '$lib/animations/satellite.js'
 
   export const ref = new Group()
   
@@ -29,10 +28,17 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     solarCellsRight: null,
     solarCellsLeft: null,
     payloadLens: null,
-    lensLight: null
+    lensLight: null,
+    topPanel: null
   }
 
+  let animated = false;
+
   useFrame((_, delta) => {
+    if(!animated && $gltf){
+      animated = true;             
+      initialSatelliteAnimation(ref)
+    }
     if (objects.solarCellsRight) {
       objects.solarCellsRight.material.uniforms.uTime.value += delta
     }
@@ -54,10 +60,9 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     <slot name="fallback" />
   {:then gltf}
     <T.Mesh
+      name="top_panel"
       geometry={gltf.nodes.top_panel.geometry}
-      position={[0.38, 4.45, 0.19]}
-      rotation={[0.51, 0.93, 2.55]}
-      scale={-0.18}
+      bind:ref={objects.topPanel}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
@@ -65,18 +70,16 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
+      name="mid_panels"
       geometry={gltf.nodes['mid_panel-2'].geometry}
-      position={[0, 0, 0]}
-      rotation={[-1.557, 0.34, -2.13]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="payload_lens"
       geometry={gltf.nodes.payload_lens.geometry}
-      position={[0.75, 3.59, 0.68]}
-      rotation={[-2.63, -0.93, -2.55]}
       bind:ref={objects.payloadLens}
     >
       <T.ShaderMaterial 
@@ -115,8 +118,7 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
-      position={[1.623, 3.307, 1.164]}
-      rotation={[125, 0, 125]}
+      name="lens_light"
       lookAt={[-0.5, -3.5, 0]}
       bind:ref={objects.lensLight}
     >
@@ -165,9 +167,8 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
+      name="side_panel"
       geometry={gltf.nodes.side_panel.geometry}
-      position={[0.06, 3.65, 0.26]}
-      rotation={[-1.55, 0.34, -2.13]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
@@ -175,144 +176,138 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
+      name="thin_panel_1"
       geometry={gltf.nodes.thin_panel_1.geometry}
-      position={[0.4, 3.73, 0.36]}
-      rotation={[-1.55, 0.34, -2.13]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="thin_panel_2"
       geometry={gltf.nodes.thin_panel_2.geometry}
-      position={[-0.29, 3.99, -0.09]}
-      rotation={[-1.55, 0.34, -2.13]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="MCU_1"
       geometry={gltf.nodes.MCU_1.geometry}
-      position={[0.65, 3.76, 0.29]}
-      rotation={[-0.19, -0.52, -0.4]}
     >
       <T.MeshStandardMaterial color="#47183a">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="MCU_2"
       geometry={gltf.nodes.MCU_2.geometry}
-      position={[0.48, 3.82, 0.57]}
-      rotation={[-0.19, -0.52, -0.4]}
     >
       <T.MeshStandardMaterial color="#47183a">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="magnetorquer_1"
       geometry={gltf.nodes.magnetorquer_1.geometry}
-      position={[1.61, 3.38, 0.6]}
-      rotation={[-0.19, -0.52, -1.97]}
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="magnetorquer_2"
       geometry={gltf.nodes.magnetorquer_2.geometry}
-      position={[0.48, 4.24, 0.82]}
-      rotation={[-2.63, -0.93, 2.17]}
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="paylod_body"
       geometry={gltf.nodes.payload_body.geometry}
       position={[0.79, 3.6, 0.66]}
-      rotation={[-2.63, -0.93, -2.55]}
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="payload_pins"
       geometry={gltf.nodes.payload_pins.geometry}
       position={[0.75, 3.59, 0.68]}
-      rotation={[-2.63, -0.93, -2.55]}
     >
       <T.MeshStandardMaterial color="#5b5b5b">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="payload_knob"
       geometry={gltf.nodes.payload_knob.geometry}
       position={[0.75, 3.59, 0.68]}
-      rotation={[-2.63, -0.93, -2.55]}
     >
       <T.MeshStandardMaterial color="#5b5b5b">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="magnetometer_1"
       geometry={gltf.nodes.magnetometer_1.geometry}
       position={[-0.13, 3.68, 0.28]}
-      rotation={[0.51, 0.93, 0.97]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="magnetometer_2"
       geometry={gltf.nodes.magnetometer_2.geometry}
       position={[0.11, 3.6, -0.12]}
-      rotation={[-2.63, -0.93, -0.97]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="magnetometer_2_handle"
       geometry={gltf.nodes.magnetometer_2_handle.geometry}
       position={[0.11, 3.6, -0.12]}
-      rotation={[-2.63, -0.93, -0.97]}
     >
       <T.MeshStandardMaterial color="#2d2d2d">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="magnetometer_1_handle"
       geometry={gltf.nodes.magnetometer_1_handle.geometry}
       position={[-0.13, 3.68, 0.28]}
-      rotation={[0.51, 0.93, 0.97]}
     >
       <T.MeshStandardMaterial color="#2d2d2d">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="battery_holder"
       geometry={gltf.nodes.battery_holder.geometry}
       position={[-0.65, 4.13, -0.34]}
-      rotation={[1.59, -0.34, 2.13]}
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="battery_plate"
       geometry={gltf.nodes.battery_plate.geometry}
       position={[-0.65, 4.13, -0.34]}
-      rotation={[1.59, -0.34, 2.13]}
     >
       <T.MeshStandardMaterial color="#472200">
       </T.MeshStandardMaterial>
     </T.Mesh>
 
     <T.Mesh
+      name="battery_cells"
       geometry={gltf.nodes.battery_cells.geometry}
       position={[-0.65, 4.13, -0.34]}
-      rotation={[1.59, -0.34, 2.13]}
     >
       <T.MeshStandardMaterial color="#473100">
       </T.MeshStandardMaterial>
@@ -320,9 +315,9 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 
           
     <T.Mesh
+      name="solar_panel_right"
       geometry={gltf.nodes.solar_panel_right.geometry}
       position={[-0.82, 4.93, -2.43]}
-      rotation={[-1.55, 0.34, 1.01]}
     >
       <T.MeshStandardMaterial color="#434343" 
 
@@ -331,9 +326,9 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
+      name="solar_panel_left"
       geometry={gltf.nodes.solar_panel_left.geometry}
       position={[-2.03, 5.32, -0.37]}
-      rotation={[-1.55, 0.34, 1.01]}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
@@ -341,9 +336,8 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
+      name="solar_cells_left"
       geometry={gltf.nodes.solar_cells_left.geometry}
-      position={[-2.03, 5.32, -0.37]}
-      rotation={[-1.55, 0.34, 1.01]}
       bind:ref={objects.solarCellsLeft}
     >
       <T.ShaderMaterial 
@@ -387,9 +381,8 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
     </T.Mesh>
 
     <T.Mesh
+      name="solar_cells_right"
       geometry={gltf.nodes.solar_cells_right.geometry}
-      position={[-0.82, 4.93, -2.43]}
-      rotation={[-1.55, 0.34, 1.01]}
       bind:ref={objects.solarCellsRight}
     >
       <T.ShaderMaterial 
