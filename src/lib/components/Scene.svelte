@@ -2,7 +2,7 @@
 import { useThrelte, T, useFrame } from '@threlte/core';
 import { OrbitControls, Grid, Float, Stars, useTexture } from '@threlte/extras';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-import { BoxGeometry, EquirectangularReflectionMapping, PlaneGeometry, ShaderMaterial, TorusGeometry, DoubleSide } from 'three';
+import { BoxGeometry, EquirectangularReflectionMapping, PlaneGeometry, ShaderMaterial, TorusGeometry, DoubleSide, PerspectiveCamera } from 'three';
 import Satellite from '$lib/components/models/satellite.svelte'
 import GalaxyScene from '$lib/components/models/scene.svelte'
 import ShootingStar from './Stars.svelte';
@@ -47,7 +47,8 @@ useFrame((_, delta) => {
 <T.DirectionalLight intensity={20.5} position={[5, 10, 0]} />
 
 <T.PerspectiveCamera 
-  makeDefault 
+  makeDefault
+  position={[10, 0, 1]}
   bind:ref={cameraRef}
 >
 </T.PerspectiveCamera>
