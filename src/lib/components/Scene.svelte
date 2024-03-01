@@ -6,6 +6,7 @@ import { BoxGeometry, EquirectangularReflectionMapping, PlaneGeometry, ShaderMat
 import Satellite from '$lib/components/models/satellite.svelte'
 import GalaxyScene from '$lib/components/models/scene.svelte'
 import ShootingStar from './Stars.svelte';
+import Text from './text.svelte'
 import { onMount } from 'svelte';
 import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin'
 import { cameraAnimation } from '$lib/animations/camera.js'
@@ -73,6 +74,8 @@ speed={6}
 
 <GalaxyScene 
   position={[-4, 4, 0]}
-  scale = {2.5}
+  scale = {3}
   rotation={[0, 1.5, 0]}
 />
+
+<Text />

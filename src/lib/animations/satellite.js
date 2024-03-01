@@ -408,7 +408,7 @@ export function initialSatelliteAnimation(satelliteRef) {
     x: finalSatelliteTransforms.side_panel.position[0],
     y: finalSatelliteTransforms.side_panel.position[1],
     z: finalSatelliteTransforms.side_panel.position[2],
-  })
+  }, '+=600')
 
   animateTimeline.add({
     targets: satelliteRef.children[1].position,

@@ -71,7 +71,7 @@ export function cameraAnimation(cameraRef){
     x: cameraStates.batteryZoom.position[0],
     y: cameraStates.batteryZoom.position[1],
     z: cameraStates.batteryZoom.position[2],
-  })
+  }, '+=500')
 
   timeline.add({
     tragets: cameraRef.rotation,
