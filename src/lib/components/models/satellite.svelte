@@ -4,25 +4,15 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
 -->
 
 <script>
-  import { SheetObject, useSequence } from '@threlte/theatre';
   import { T, forwardEventHandlers, useFrame } from '@threlte/core'
-  import { scroll } from '$lib/stores/pages.js';
   import { useGltf, Edges } from '@threlte/extras'
-  import { onMount } from 'svelte';
-  import { ConeGeometry, Group, Mesh, ShaderMaterial } from 'three'
+  import {  Group } from 'three'
   import { initialSatelliteAnimation } from '$lib/animations/satellite.js'
 
   export const ref = new Group()
   
   const gltf = useGltf('/models/satellite.glb', { useDraco: true })
   const component = forwardEventHandlers()
-  const { position, length } = useSequence();
-
-  onMount(() => {
-    window.addEventListener('scroll', () =>{
-      // $position = $scroll.scrollY * $length;
-    }) 
-  })
  
   let objects = {
     solarCellsRight: null,
@@ -35,8 +25,8 @@ Command: npx @threlte/gltf@2.0.1 /home/fiveyyyy/github/upagraha/static/models/sa
   let animated = false;
 
   useFrame((_, delta) => {
-    if(!animated && $gltf){
-      animated = true;             
+    if($gltf && !animated){
+      animated = true;
       initialSatelliteAnimation(ref)
     }
     if (objects.solarCellsRight) {

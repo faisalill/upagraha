@@ -1,7 +1,7 @@
-import { writeable } from 'svelte/store';
+import { writable } from 'svelte/store';
 
-export const animations = writeable({
- satelliteAssemble: false,
- satelliteFloat: false
-
+export const animationStore = writable({
+  isSectionOneSatelliteAnimationDone: false,
+  isSectionOneTextAnimationDone: false,
+  isScrollAnimationDone: false,
 });

@@ -6,10 +6,11 @@ import { BoxGeometry, EquirectangularReflectionMapping, PlaneGeometry, ShaderMat
 import Satellite from '$lib/components/models/satellite.svelte'
 import GalaxyScene from '$lib/components/models/scene.svelte'
 import ShootingStar from './Stars.svelte';
-import Text from './text.svelte'
+import Text from './Text.svelte'
 import { onMount } from 'svelte';
 import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin'
 import { cameraAnimation } from '$lib/animations/camera.js'
+import { scrollAnimationInit } from '$lib/animations/scroll.js'
 
 injectLookAtPlugin()
 
@@ -40,6 +41,7 @@ useFrame((_, delta) => {
   if(satelliteRef && !animated) {
     animated = true;
     cameraAnimation(cameraRef)
+    scrollAnimationInit(window)
   }
 })
 </script>

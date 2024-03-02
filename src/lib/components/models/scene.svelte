@@ -8,6 +8,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
   import { T, forwardEventHandlers, useFrame } from '@threlte/core'
   import { useGltf, Float } from '@threlte/extras'
   import { Sheet, SheetObject } from '@threlte/theatre';
+  import animate from 'animejs';
 
   export const ref = new Group()
   let sputnikSolarCellsRef = null;
@@ -295,7 +296,9 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
     </Float>
 
 <!-- Sputnik -->
-    <T.Group bind:ref={sputnikRef}>
+    <T.Group 
+      position={[-0.2, 0, 0]}
+      bind:ref={sputnikRef}>
       <T.Mesh geometry={gltf.nodes.sputnik_black_body.geometry} 
         position={[0, 0, 0]}
       >
