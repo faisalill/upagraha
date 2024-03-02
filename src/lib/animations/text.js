@@ -32,7 +32,6 @@ export function textAnimation(textRef){
   })
 
   animationStore.subscribe((value) => {
-    console.log("Running");
     if(value.isSectionOneSatelliteAnimationDone && !value.isSectionOneTextAnimationDone) {
 
       const duration = 1000;

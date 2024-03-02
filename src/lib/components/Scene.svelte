@@ -21,8 +21,7 @@ const rgbeLoader = new RGBELoader();
 let torusRef = null;
 let satelliteRef = null;
 let cameraRef = null;
-let eyeCandyOne = null;
-let eyeCandyTwo = null;
+let sceneRef = null;
 
 let animated = false;
 
@@ -41,7 +40,7 @@ useFrame((_, delta) => {
   if(satelliteRef && !animated) {
     animated = true;
     cameraAnimation(cameraRef)
-    scrollAnimationInit(window)
+    scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef)
   }
 })
 </script>
@@ -75,6 +74,7 @@ speed={6}
 <!-- /> -->
 
 <GalaxyScene 
+  bind:ref={sceneRef}
   position={[-4, 4, 0]}
   scale = {3}
   rotation={[0, 1.5, 0]}
