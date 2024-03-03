@@ -21,19 +21,16 @@ let orderOfAnimation = [];
 
 export function textAnimation(textRef){
 
-  textRef.traverse((child) => {
-    if(child.isMesh) {
-      orderOfAnimation.push(child);
-    }
-  })
-  
-  orderOfAnimation.forEach((child) => {
-    child.position.y = -1500;
-  })
 
   animationStore.subscribe((value) => {
     if(value.isSectionOneSatelliteAnimationDone && !value.isSectionOneTextAnimationDone) {
 
+      textRef.traverse((child) => {
+        if(child.isMesh) {
+          orderOfAnimation.push(child);
+        }
+      })
+      
       const duration = 1000;
       const delay = 850;
 

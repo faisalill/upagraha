@@ -1,16 +1,17 @@
 <script>
 import { useThrelte, T, useFrame } from '@threlte/core';
-import { OrbitControls, Grid, Float, Stars, useTexture } from '@threlte/extras';
+import { OrbitControls, Float, useTexture } from '@threlte/extras';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-import { BoxGeometry, EquirectangularReflectionMapping, PlaneGeometry, ShaderMaterial, TorusGeometry, DoubleSide, PerspectiveCamera } from 'three';
-import Satellite from '$lib/components/models/satellite.svelte'
-import GalaxyScene from '$lib/components/models/scene.svelte'
+import { EquirectangularReflectionMapping } from 'three';
+import Satellite from '$lib/components/models/satellite.svelte';
+import GalaxyScene from '$lib/components/models/scene.svelte';
 import ShootingStar from './Stars.svelte';
-import Text from './Text.svelte'
+import Text from './Text.svelte';
+import Lenis from '@studio-freight/lenis';
 import { onMount } from 'svelte';
-import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin'
-import { cameraAnimation } from '$lib/animations/camera.js'
-import { scrollAnimationInit } from '$lib/animations/scroll.js'
+import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin';
+import { cameraAnimation } from '$lib/animations/camera.js';
+import { scrollAnimationInit } from '$lib/animations/scroll.js';
 
 injectLookAtPlugin()
 
@@ -22,10 +23,19 @@ let torusRef = null;
 let satelliteRef = null;
 let cameraRef = null;
 let sceneRef = null;
-
+let textRef = null;
 let animated = false;
 
 onMount(async ()=> {
+  // const lenis = new Lenis();
+  //
+  // function raf(time) {
+  //   lenis.raf(time)
+  //   requestAnimationFrame(raf)
+  // }
+  //
+  // requestAnimationFrame(raf)
+
   rgbeLoader.load('/textures/envMap.hdr', (texture) => {
     texture.mapping = EquirectangularReflectionMapping;
     scene.environment = texture;
@@ -39,8 +49,8 @@ useFrame((_, delta) => {
   }
   if(satelliteRef && !animated) {
     animated = true;
-    cameraAnimation(cameraRef)
-    scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef)
+    // cameraAnimation(cameraRef)
+    scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef)
   }
 })
 </script>
@@ -53,6 +63,7 @@ useFrame((_, delta) => {
   position={[10, 0, 1]}
   bind:ref={cameraRef}
 >
+  <OrbitControls enableDamping />
 </T.PerspectiveCamera>
 
 <Float
@@ -80,4 +91,9 @@ speed={6}
   rotation={[0, 1.5, 0]}
 />
 
-<Text />
+<Text 
+  bind:ref={textRef}
+  position={[-4, 7, 6]}
+  rotation={[0, Math.PI / 2, 0]}
+  scale={0.017}
+/>
