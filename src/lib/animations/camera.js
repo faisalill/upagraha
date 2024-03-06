@@ -164,6 +164,7 @@ export function cameraAnimation(cameraRef){
     z: cameraStates.satelliteStructureZoom.rotation[2],
   },`-=${duration}`)
 
+
 }
 
 

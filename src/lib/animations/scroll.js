@@ -9,7 +9,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
   timeline = animate.timeline({
     easing: 'easeInExpo',
     duration: 400,
-    autoplay: true
+    autoplay: false
   })
 
   const scrollContainer = document.getElementById('scroll-container')
@@ -18,7 +18,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
       scroll= window.scrollY / (scrollContainer.clientHeight - window.innerHeight);
 
       if(timeline) {
-        timeline.seek(timeline.duration * scroll * 10);
+        timeline.seek(timeline.duration * scroll);
       }
   }) 
 

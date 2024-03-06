@@ -49,7 +49,7 @@ useFrame((_, delta) => {
   }
   if(satelliteRef && !animated) {
     animated = true;
-    // cameraAnimation(cameraRef)
+    cameraAnimation(cameraRef)
     scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef)
   }
 })
@@ -63,7 +63,6 @@ useFrame((_, delta) => {
   position={[10, 0, 1]}
   bind:ref={cameraRef}
 >
-  <OrbitControls enableDamping />
 </T.PerspectiveCamera>
 
 <Float
