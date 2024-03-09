@@ -57,7 +57,7 @@ export function cameraAnimation(cameraRef){
     x: cameraStates.satelliteBatteryZoom.position[0],
     y: cameraStates.satelliteBatteryZoom.position[1],
     z: cameraStates.satelliteBatteryZoom.position[2],
-  })
+  }, `+=500`)
 
   timeline.add({
     targets: cameraRef.rotation,

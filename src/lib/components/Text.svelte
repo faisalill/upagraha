@@ -3,7 +3,6 @@ import { T, useFrame, forwardEventHandlers } from '@threlte/core';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { Float } from '@threlte/extras';
-import { SheetObject } from '@threlte/theatre'
 import { textAnimation } from '$lib/animations/text.js'
 import { Group } from 'three';
 
@@ -70,16 +69,10 @@ rotationIntensity={0.2}
 rotationSpeed={6}
 speed={6}
 >
-      <SheetObject 
-        key="check"
-        let:Sync
->
       <T.Mesh geometry={geometries[0]} rotation={[0, 0, 0.3]} position={[0, -2000, 0]}>
         <T.MeshStandardMaterial color={textColors.orange}>
-            <Sync color />
         </T.MeshStandardMaterial>
       </T.Mesh>
-      </SheetObject>
 </Float>
 <Float
 floatIntensity={1}

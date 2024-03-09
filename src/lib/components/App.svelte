@@ -1,11 +1,11 @@
 <script>
   import { Canvas } from '@threlte/core';
-  import { Theatre } from '@threlte/theatre';
   import Scene from './Scene.svelte'
+  import { useProgress } from '@threlte/extras';
+
 </script>
 
 <Canvas>
-  <Theatre>
     <Scene />
-  </Theatre>
 </Canvas>
+

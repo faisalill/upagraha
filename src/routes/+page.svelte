@@ -2,6 +2,9 @@
   import App from '$lib/components/App.svelte'
   import { onMount } from 'svelte';
   import { scroll } from '$lib/stores/pages.js'
+  import { useProgress } from '@threlte/extras';
+
+  const { progress } = useProgress();
 
   onMount(() => {
     const scrollContainer = document.getElementById('scroll-container')
@@ -14,11 +17,15 @@
   })
 </script>
 
-<div class="canvas">
-  <App />
-</div>
-<div class="scroll-container" id="scroll-container">
-</div>
+{#if $progress > 1 }
+  <h1 class="loader"> Loading... </h1>
+{:else} 
+  <div class="canvas">
+    <App />
+  </div>
+  <div class="scroll-container" id="scroll-container">
+  </div>
+{/if}
 
 <style>
   :global(body) {
@@ -39,5 +46,12 @@
     top: 0;
     left: 0;
     width: 100vw;
+  }
+  .loader {
+    color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 </style>

@@ -7,7 +7,6 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
   import { Group, MeshStandardMaterial, ShaderMaterial } from 'three'
   import { T, forwardEventHandlers, useFrame } from '@threlte/core'
   import { useGltf, Float } from '@threlte/extras'
-  import { Sheet, SheetObject } from '@threlte/theatre';
   import animate from 'animejs';
 
   export const ref = new Group()
