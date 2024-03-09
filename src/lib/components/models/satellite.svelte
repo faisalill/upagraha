@@ -1,8 +1,9 @@
 <script>
-  import { T, forwardEventHandlers, useFrame } from '@threlte/core'
-  import { useGltf, Edges } from '@threlte/extras'
-  import {  Group } from 'three'
-  import { initialSatelliteAnimation } from '$lib/animations/satellite.js'
+  import { T, forwardEventHandlers, useFrame } from '@threlte/core';
+  import { useGltf, Edges } from '@threlte/extras';
+  import { Group, DoubleSide } from 'three';
+  import { initialSatelliteAnimation } from '$lib/animations/satellite.js';
+  import HolographicMaterial from '$lib/materials/HolographicMaterial.js';
 
   export const ref = new Group()
   
@@ -14,7 +15,8 @@
     solarCellsLeft: null,
     payloadLens: null,
     lensLight: null,
-    topPanel: null
+    topPanel: null,
+    sidePanel: null
   }
 
   let animated = false;
@@ -60,6 +62,7 @@
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -100,6 +103,7 @@
           }
         `}
       />
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -149,11 +153,13 @@
             }
         `}
         />
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
       name="side_panel"
       geometry={gltf.nodes.side_panel.geometry}
+      bind:ref={objects.sidePanel}
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
@@ -166,6 +172,7 @@
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -174,6 +181,7 @@
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -182,6 +190,7 @@
     >
       <T.MeshStandardMaterial color="#47183a">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -190,6 +199,7 @@
     >
       <T.MeshStandardMaterial color="#47183a">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -198,6 +208,7 @@
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
+        <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -206,6 +217,7 @@
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -215,6 +227,7 @@
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
+      <Edges visible={false} color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -224,6 +237,7 @@
     >
       <T.MeshStandardMaterial color="#5b5b5b">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -233,6 +247,7 @@
     >
       <T.MeshStandardMaterial color="#5b5b5b">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -242,6 +257,7 @@
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges visible={false} color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -251,6 +267,7 @@
     >
       <T.MeshStandardMaterial color="#434343">
       </T.MeshStandardMaterial>
+      <Edges visible={false} color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -260,6 +277,7 @@
     >
       <T.MeshStandardMaterial color="#2d2d2d">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -269,6 +287,7 @@
     >
       <T.MeshStandardMaterial color="#2d2d2d">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -278,6 +297,7 @@
     >
       <T.MeshStandardMaterial color="#000000">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -287,6 +307,7 @@
     >
       <T.MeshStandardMaterial color="#472200">
       </T.MeshStandardMaterial>
+      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -296,6 +317,7 @@
     >
       <T.MeshStandardMaterial color="#473100">
       </T.MeshStandardMaterial>
+      <Edges visible={false} color="black" />
     </T.Mesh>
 
           

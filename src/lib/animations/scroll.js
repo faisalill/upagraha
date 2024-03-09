@@ -1,5 +1,21 @@
 import animate from 'animejs';
 import { animationStore } from '$lib/stores/animations.js';
+import { Color, DoubleSide } from 'three';
+import HolographicMaterial from '$lib/materials/HolographicMaterial.js';
+
+const holographicMaterial = new HolographicMaterial({
+  fresnelAmount: 1.0,
+  fresnelOpacity: 1.0,
+  hologramBrightness: 9.2,
+  scanlineSize: 8,
+  signalSpeed: 0.45,
+  hologramColor: "#00d5ff",
+  hologramOpacity: 0.01,
+  blinkFresnelOnly: true,
+  enableBlinking: true,
+  enableAdditive: true,
+  side: DoubleSide,
+});
 
 let scroll = 0;
 let duration = 400;
@@ -8,30 +24,116 @@ let textTimeline;
 let cameraTimeline;
 
 const cameraPath = [
-  { 
-    position: [13.267572519471452, 7.276286868171122, -7.689494027374315],
-    rotation: [-2.898572493424639, 1.0323659139231625, 2.9318790720125696]
+  {
+    position: {
+    "x": 3.015974526392603,
+    "y": 3.2351878949386097,
+    "z": -1.225052308081005
+},
+    rotation: {
+    "isEuler": true,
+    "_x": 2.9190687923491523,
+    "_y": 0.8246167284790666,
+    "_z": -2.9769486704846746,
+    "_order": "XYZ"
+},
+  }, 
+  {
+    position: {
+    "x": 2.6708053891999253,
+    "y": 4.894756638793814,
+    "z": 1.512646336864094
+},
+    rotation:{
+    "isEuler": true,
+    "_x": -0.9774093529283726,
+    "_y": 1.0088384546966944,
+    "_z": 0.8978584031850461,
+}  
+},
+  {
+    position: {
+    "x": 1.8781494466225288,
+    "y": 4.5408065066089565,
+    "z": 0.505516556912562
+},
+    rotation: {
+    "isEuler": true,
+    "_x": -1.7689573450782217,
+    "_y": 1.1725379298652117,
+    "_z": 1.785290425453865,
+    "_order": "XYZ"
+}
   },
   {
-    position: [5.162077538022855, 5.1879704166421075, -9.051253037690108],
-    rotation: [-3.072862010449154, 0.549507088347567, 3.1056557591852605]
+    position: {
+    "x": 0.09037092976397582,
+    "y": 5.800064799582229,
+    "z": 1.5880996629760686
+},
+    rotation: {
+    "isEuler": true,
+    "_x": -0.8086569172363095,
+    "_y": 0.11265120207844291,
+    "_z": 0.11722781219368886,
+    "_order": "XYZ"
+}
   },
   {
-    position: [3.7387578370823684, 3.4206342854209972, -1.194163462652054],
-    rotation: [3.032270084910241, 0.9318499201498738, -3.0537123980555974],
-  }
+    position: {
+    "x": -0.5225821616995961,
+    "y": 6.056869511612841,
+    "z": -1.5403945356673012
+},
+    rotation: {
+    "isEuler": true,
+    "_x": -2.23977799088368,
+    "_y": -0.0787690076974659,
+    "_z": -3.04239017123939,
+    "_order": "XYZ"
+}
+  },
+  {
+    position: {
+    "x": 1.11948877857054,
+    "y": 9.064445230150925,
+    "z": 3.425745259908542
+},
+    rotation: {
+    "isEuler": true,
+    "_x": -1.238397739844181,
+    "_y": 0.40312527601606835,
+    "_z": 0.8491594791420177,
+    "_order": "XYZ"
+}
+  },
+  {
+    position: {
+    "x": 6.414670086311794,
+    "y": 5.919290210996387,
+    "z": 1.079561775876595
+},
+
+    rotation: {
+    "isEuler": true,
+    "_x": -1.5632631233123888,
+    "_y": 1.3109715271006988,
+    "_z": 1.5630015000532327,
+    "_order": "XYZ"
+}
+  },
 ]
 
 export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRe, textRef) {
 
   textTimeline= animate.timeline({
-    easing: 'easeInExpo',
+    easing: 'cubicBezier(.5, .05, .1, .3)',
     duration: duration,
     autoplay: false
   })
 
   cameraTimeline = animate.timeline({
-    easing: 'easeInExpo',
+    easing: 'cubicBezier(.5, .05, .1, .3)',
     duration: cameraTimelineDuration,
     autoplay: false
   })
@@ -58,20 +160,6 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
           textRefs.push(child)
         }
       })
-
-      cameraTimeline.add({
-        targets: cameraRef.position,
-        x: cameraPath[0].position[0],
-        y: cameraPath[0].position[1],
-        z: cameraPath[0].position[2],
-      })
-
-      cameraTimeline.add({
-        targets: cameraRef.rotation,
-        x: cameraPath[0].rotation[0],
-        y: cameraPath[0].rotation[1],
-        z: cameraPath[0].rotation[2],
-      }, `-=${cameraTimelineDuration}`)
 
       textTimeline.add({
         targets: textRefs[12].position,
@@ -108,20 +196,6 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: -2000,
       })
 
-      cameraTimeline.add({
-        targets: cameraRef.position,
-        x: cameraPath[1].position[0],
-        y: cameraPath[1].position[1],
-        z: cameraPath[1].position[2],
-      })
-
-      cameraTimeline.add({
-        targets: cameraRef.rotation,
-        x: cameraPath[1].rotation[0],
-        y: cameraPath[1].rotation[1],
-        z: cameraPath[1].rotation[2],
-      }, `-=${cameraTimelineDuration}`)
-
       textTimeline.add({
         targets: textRefs[5].position,
         y: -2000,
@@ -154,16 +228,100 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       cameraTimeline.add({
         targets: cameraRef.position,
-        x: cameraPath[2].position[0],
-        y: cameraPath[2].position[1],
-        z: cameraPath[2].position[2],
+        x: cameraPath[0].position.x,
+        y: cameraPath[0].position.y,
+        z: cameraPath[0].position.z,
       })
 
       cameraTimeline.add({
         targets: cameraRef.rotation,
-        x: cameraPath[2].rotation[0],
-        y: cameraPath[2].rotation[1],
-        z: cameraPath[2].rotation[2],
+        x: cameraPath[0].rotation._x,
+        y: cameraPath[0].rotation._y,
+        z: cameraPath[0].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[1].position.x,
+        y: cameraPath[1].position.y,
+        z: cameraPath[1].position.z,
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[1].rotation._x,
+        y: cameraPath[1].rotation._y,
+        z: cameraPath[1].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[2].position.x,
+        y: cameraPath[2].position.y,
+        z: cameraPath[2].position.z,
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[2].rotation._x,
+        y: cameraPath[2].rotation._y,
+        z: cameraPath[2].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[3].position.x,
+        y: cameraPath[3].position.y,
+        z: cameraPath[3].position.z,
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[3].rotation._x,
+        y: cameraPath[3].rotation._y,
+        z: cameraPath[3].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[4].position.x,
+        y: cameraPath[4].position.y,
+        z: cameraPath[4].position.z,
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[4].rotation._x,
+        y: cameraPath[4].rotation._y,
+        z: cameraPath[4].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[5].position.x,
+        y: cameraPath[5].position.y,
+        z: cameraPath[5].position.z,
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[5].rotation._x,
+        y: cameraPath[5].rotation._y,
+        z: cameraPath[5].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[6].position.x,
+        y: cameraPath[6].position.y,
+        z: cameraPath[6].position.z,
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[6].rotation._x,
+        y: cameraPath[6].rotation._y,
+        z: cameraPath[6].rotation._z,
       }, `-=${cameraTimelineDuration}`)
     }
   })

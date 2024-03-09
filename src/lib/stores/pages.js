@@ -1,6 +1,6 @@
 import {writable} from 'svelte/store';
 
 export const scroll = writable({
-  pages: 5,
+  pages: 10,
   scrollY: null
 });

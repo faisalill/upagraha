@@ -60,9 +60,15 @@ useFrame((_, delta) => {
 
 <T.PerspectiveCamera 
   makeDefault
-  position={[10, 0, 1]}
+  position={[10, 5, 1]}
   bind:ref={cameraRef}
 >
+ <!-- <OrbitControls  -->
+ <!--  on:change={() => { -->
+ <!--  console.log(cameraRef) -->
+ <!--  }} -->
+ <!-- enableDamping -->
+ <!-- /> -->
 </T.PerspectiveCamera>
 
 <Float
