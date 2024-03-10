@@ -59,8 +59,7 @@ const cameraPath = [
 },
     rotation: {
     "isEuler": true,
-    "_x": -1.7689573450782217,
-    "_y": 1.1725379298652117,
+    "_x": -1.7689573450782217, "_y": 1.1725379298652117,
     "_z": 1.785290425453865,
     "_order": "XYZ"
 }
@@ -124,7 +123,22 @@ const cameraPath = [
   },
 ]
 
-export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRe, textRef) {
+const cyan = new Color( 'cyan' );
+
+function strip(ref) {
+  ref.children[0].visible = true;
+  ref.children[0].material.color = cyan;
+  ref.material.transparent = true;
+  animate({
+    targets: ref.material,
+    opacity: 0,
+    duration: 1000,
+    easing: 'linear',
+  })
+
+}
+
+export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef) {
 
   textTimeline= animate.timeline({
     easing: 'cubicBezier(.5, .05, .1, .3)',
@@ -141,19 +155,27 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
   const scrollContainer = document.getElementById('scroll-container')
 
   window.addEventListener('scroll', () =>{
-      scroll= window.scrollY / (scrollContainer.clientHeight - window.innerHeight);
+      const splitRatio = 4;
+      const height = scrollContainer.clientHeight - window.innerHeight;
+      const splitHeight = height / splitRatio;
+      scroll = window.scrollY / height;
+      const textScroll = window.scrollY / splitHeight;
+
+      const cameraScroll = ( (window.scrollY - splitHeight) / (height - splitHeight));
 
       if(textTimeline) {
-        textTimeline.seek(textTimeline.duration * scroll);
+        textTimeline.seek(textTimeline.duration * textScroll);
       }
       if(cameraTimeline) {
-        cameraTimeline.seek(cameraTimeline.duration * scroll);
+        cameraTimeline.seek(cameraTimeline.duration * cameraScroll);
       }
   }) 
 
   animationStore.subscribe((value) => {
     if (value.isSectionOneTextAnimationDone && !value.isScrollAnimationDone) {
-       let textRefs = []
+       let textRefs = [];
+       let sceneRefs = {};
+       let satelliteRefs = {};
 
        textRef.traverse((child) => {
         if (child.isMesh) {
@@ -161,69 +183,157 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         }
       })
 
+       sceneRef.traverse((child) => {
+        if (child.isMesh) {
+          sceneRefs[`${child.name}`] = child;
+        }
+      })
+
+      satelliteRef.traverse((child) => {
+        if (child.isMesh) {
+          satelliteRefs[`${child.name}`] = child;
+        }
+      })
+
+
       textTimeline.add({
         targets: textRefs[12].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.sixth_plane)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[11].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.fifth_plane)
+          strip(sceneRefs.stars_1)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[10].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.fourth_plane)
+          strip(sceneRefs.stars_2)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[9].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.third_plane)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[8].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.second_plane)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[7].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.first_plane)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[6].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.planet_two)
+          strip(sceneRefs.discovery_emission_1)
+          strip(sceneRefs.discovery_emission_2)
+          strip(sceneRefs.discovery_propeller_emission_1)
+          strip(sceneRefs.discovery_propeller_emission_2)
+          strip(sceneRefs.discovery_black_body)
+          strip(sceneRefs.discovery_white_body)
+          strip(sceneRefs.discovery_propeller_orange_shaft)
+          strip(sceneRefs.discovery_propeller_yellow_tanks)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[5].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.shooting_star)
+          strip(sceneRefs.shooting_star_trajectory)
+          strip(sceneRefs.shooting_star_emission)
+          strip(sceneRefs.planet_four)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[4].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.planet_three)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[3].position,
         y: -2000,
+        complete: () => {
+        }
       })
 
       textTimeline.add({
         targets: textRefs[2].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.planet_one)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[1].position,
         y: -2000,
+        complete: () => {
+          strip(sceneRefs.planet_five)
+          strip(sceneRefs.sputnik_black_body)
+          strip(sceneRefs.sputnik_yellow_body)
+          strip(sceneRefs.sputnik_white_body)
+        }
       })
 
       textTimeline.add({
         targets: textRefs[0].position,
         y: -2000,
+        complete: () => {
+          strip(satelliteRefs.MCU_1)
+          strip(satelliteRefs.MCU_2)
+          strip(satelliteRefs.battery_cells)
+          strip(satelliteRefs.battery_holder)
+          strip(satelliteRefs.battery_plate)
+          strip(satelliteRefs.magnetometer_1)
+          strip(satelliteRefs.magnetometer_1_handle)
+          strip(satelliteRefs.magnetometer_2)
+          strip(satelliteRefs.magnetometer_2_handle)
+          strip(satelliteRefs.magnetorquer_1)
+          strip(satelliteRefs.magnetorquer_2)
+          strip(satelliteRefs.mid_panels)
+          strip(satelliteRefs.payload_knob)
+          strip(satelliteRefs.payload_lens)
+          strip(satelliteRefs.payload_pins)
+          strip(satelliteRefs.payload_body)
+          strip(satelliteRefs.solar_panel_left)
+          strip(satelliteRefs.solar_panel_right)
+          strip(satelliteRefs.side_panel)
+          strip(satelliteRefs.top_panel)
+          strip(satelliteRefs.thin_panel_1)
+          strip(satelliteRefs.thin_panel_2)
+        }
       })
 
       cameraTimeline.add({
@@ -322,6 +432,8 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[6].rotation._x,
         y: cameraPath[6].rotation._y,
         z: cameraPath[6].rotation._z,
+        complete: () => {
+        }
       }, `-=${cameraTimelineDuration}`)
     }
   })

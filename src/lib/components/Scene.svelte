@@ -49,7 +49,7 @@ useFrame((_, delta) => {
   }
   if(satelliteRef && !animated) {
     animated = true;
-    cameraAnimation(cameraRef);
+    // cameraAnimation(cameraRef);
     scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef)
   }
 })
@@ -63,12 +63,9 @@ useFrame((_, delta) => {
   position={[10, 5, 1]}
   bind:ref={cameraRef}
 >
- <!-- <OrbitControls  -->
- <!--  on:change={() => { -->
- <!--  console.log(cameraRef) -->
- <!--  }} -->
- <!-- enableDamping -->
- <!-- /> -->
+ <OrbitControls 
+ enableDamping
+ />
 </T.PerspectiveCamera>
 
 <Float
@@ -79,15 +76,6 @@ speed={6}
 >
 <Satellite bind:ref={satelliteRef} position={[0, 0, 0]} />
 </Float>
-
-<!-- <Satellite bind:ref={satelliteRef} /> -->
-
-<!-- <Stars  -->
-<!--   count={4000}  -->
-<!--   factor={6} -->
-<!--   lightness={0.4} -->
-<!--   speed={4} -->
-<!-- /> -->
 
 <GalaxyScene 
   bind:ref={sceneRef}

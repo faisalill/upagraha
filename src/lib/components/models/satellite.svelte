@@ -51,7 +51,7 @@
       geometry={gltf.nodes.top_panel.geometry}
       bind:ref={objects.topPanel}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -60,7 +60,7 @@
       name="mid_panels"
       geometry={gltf.nodes['mid_panel-2'].geometry}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -71,6 +71,8 @@
       bind:ref={objects.payloadLens}
     >
       <T.ShaderMaterial 
+        transparent={true} 
+        opacity={1.0}
         uniforms={{
           uTime: { value: 0 }
         }}
@@ -103,7 +105,7 @@
           }
         `}
       />
-      <Edges color="black" />
+      <Edges visible={false} color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -115,7 +117,8 @@
         args={[0.5, 2, 32]} 
       />
         <T.ShaderMaterial 
-        transparent
+        transparent={true} 
+        opacity={1.0}
         wireframe
         side={2}
         uniforms={{
@@ -153,7 +156,6 @@
             }
         `}
         />
-      <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
@@ -161,7 +163,7 @@
       geometry={gltf.nodes.side_panel.geometry}
       bind:ref={objects.sidePanel}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -170,7 +172,7 @@
       name="thin_panel_1"
       geometry={gltf.nodes.thin_panel_1.geometry}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -179,7 +181,7 @@
       name="thin_panel_2"
       geometry={gltf.nodes.thin_panel_2.geometry}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -188,7 +190,7 @@
       name="MCU_1"
       geometry={gltf.nodes.MCU_1.geometry}
     >
-      <T.MeshStandardMaterial color="#47183a">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#47183a">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -197,7 +199,7 @@
       name="MCU_2"
       geometry={gltf.nodes.MCU_2.geometry}
     >
-      <T.MeshStandardMaterial color="#47183a">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#47183a">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -206,7 +208,7 @@
       name="magnetorquer_1"
       geometry={gltf.nodes.magnetorquer_1.geometry}
     >
-      <T.MeshStandardMaterial color="#000000">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
       </T.MeshStandardMaterial>
         <Edges color="black" />
     </T.Mesh>
@@ -215,17 +217,17 @@
       name="magnetorquer_2"
       geometry={gltf.nodes.magnetorquer_2.geometry}
     >
-      <T.MeshStandardMaterial color="#000000">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
 
     <T.Mesh
-      name="paylod_body"
+      name="payload_body"
       geometry={gltf.nodes.payload_body.geometry}
       position={[0.79, 3.6, 0.66]}
     >
-      <T.MeshStandardMaterial color="#000000">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
       </T.MeshStandardMaterial>
       <Edges visible={false} color="black" />
     </T.Mesh>
@@ -235,7 +237,7 @@
       geometry={gltf.nodes.payload_pins.geometry}
       position={[0.75, 3.59, 0.68]}
     >
-      <T.MeshStandardMaterial color="#5b5b5b">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#5b5b5b">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -245,7 +247,7 @@
       geometry={gltf.nodes.payload_knob.geometry}
       position={[0.75, 3.59, 0.68]}
     >
-      <T.MeshStandardMaterial color="#5b5b5b">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#5b5b5b">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -255,7 +257,7 @@
       geometry={gltf.nodes.magnetometer_1.geometry}
       position={[-0.13, 3.68, 0.28]}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges visible={false} color="black" />
     </T.Mesh>
@@ -265,7 +267,7 @@
       geometry={gltf.nodes.magnetometer_2.geometry}
       position={[0.11, 3.6, -0.12]}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges visible={false} color="black" />
     </T.Mesh>
@@ -275,7 +277,7 @@
       geometry={gltf.nodes.magnetometer_2_handle.geometry}
       position={[0.11, 3.6, -0.12]}
     >
-      <T.MeshStandardMaterial color="#2d2d2d">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#2d2d2d">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -285,7 +287,7 @@
       geometry={gltf.nodes.magnetometer_1_handle.geometry}
       position={[-0.13, 3.68, 0.28]}
     >
-      <T.MeshStandardMaterial color="#2d2d2d">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#2d2d2d">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -295,7 +297,7 @@
       geometry={gltf.nodes.battery_holder.geometry}
       position={[-0.65, 4.13, -0.34]}
     >
-      <T.MeshStandardMaterial color="#000000">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -305,7 +307,7 @@
       geometry={gltf.nodes.battery_plate.geometry}
       position={[-0.65, 4.13, -0.34]}
     >
-      <T.MeshStandardMaterial color="#472200">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#472200">
       </T.MeshStandardMaterial>
       <Edges color="black" />
     </T.Mesh>
@@ -315,7 +317,7 @@
       geometry={gltf.nodes.battery_cells.geometry}
       position={[-0.65, 4.13, -0.34]}
     >
-      <T.MeshStandardMaterial color="#473100">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#473100">
       </T.MeshStandardMaterial>
       <Edges visible={false} color="black" />
     </T.Mesh>
@@ -326,7 +328,7 @@
       geometry={gltf.nodes.solar_panel_right.geometry}
       position={[-0.82, 4.93, -2.43]}
     >
-      <T.MeshStandardMaterial color="#434343" 
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343" 
 
       />
       <Edges color="cyan" />
@@ -337,7 +339,7 @@
       geometry={gltf.nodes.solar_panel_left.geometry}
       position={[-2.03, 5.32, -0.37]}
     >
-      <T.MeshStandardMaterial color="#434343">
+      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#434343">
       </T.MeshStandardMaterial>
       <Edges color="cyan" />
     </T.Mesh>
@@ -348,6 +350,8 @@
       bind:ref={objects.solarCellsLeft}
     >
       <T.ShaderMaterial 
+        transparent={true} 
+        opacity={1.0}
         color="#043843"
         uniforms={{
           uTime: { value: 0 }
@@ -393,6 +397,8 @@
       bind:ref={objects.solarCellsRight}
     >
       <T.ShaderMaterial 
+        transparent={true} 
+        opacity={1.0}
         color="#043843"
         uniforms={{
           uTime: { value: 0 }

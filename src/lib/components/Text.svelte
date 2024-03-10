@@ -2,7 +2,7 @@
 import { T, useFrame, forwardEventHandlers } from '@threlte/core';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-import { Float } from '@threlte/extras';
+import { Float, Edges } from '@threlte/extras';
 import { textAnimation } from '$lib/animations/text.js'
 import { Group } from 'three';
 
@@ -72,6 +72,7 @@ speed={6}
       <T.Mesh geometry={geometries[0]} rotation={[0, 0, 0.3]} position={[0, -2000, 0]}>
         <T.MeshStandardMaterial color={textColors.orange}>
         </T.MeshStandardMaterial>
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -82,6 +83,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[1]} position={[85, -2000, 0]} rotation={[0, 0, 0.2]}>
         <T.MeshStandardMaterial color={textColors.red} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -92,6 +94,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[2]} position={[210, -2000, 0]}>
         <T.MeshStandardMaterial color={textColors.orange} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -102,6 +105,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[3]} position={[295, -2000, 0]} rotation={[0, 0, -0.2]}>
         <T.MeshStandardMaterial color={textColors.red} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -112,6 +116,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[4]} position={[390, -2000, 0]} rotation={[0, 0, -0.3]}>
         <T.MeshStandardMaterial color={textColors.orange} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
     </T.Group>
@@ -125,6 +130,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[5]} position={[0, -2000, 0]} rotation={[0, 0, 0.4]}>
         <T.MeshStandardMaterial color={textColors.red} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -135,6 +141,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[6]} position={[95, -2000, 0]} rotation={[0, 0, 0.3]}>
         <T.MeshStandardMaterial color={textColors.orange} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 
@@ -146,6 +153,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[7]} position={[185, -2000, 0]} rotation={[0, 0, 0.2]}>
         <T.MeshStandardMaterial color={textColors.red} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -156,6 +164,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[8]} position={[280, -2000, 0]} rotation={[0, 0, 0.1]}>
         <T.MeshStandardMaterial color={textColors.orange} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -166,6 +175,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[9]} position={[375, -2000, 0]} rotation={[0, 0, -0.1]}>
         <T.MeshStandardMaterial color={textColors.red} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -176,6 +186,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[10]} position={[475, -2000, 0]} rotation={[0, 0, -0.2]}>
         <T.MeshStandardMaterial color={textColors.orange} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -186,6 +197,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[11]} position={[575, -2000, 0]} rotation={[0, 0, -0.3]}>
         <T.MeshStandardMaterial color={textColors.red} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
 <Float
@@ -196,6 +208,7 @@ speed={6}
 >
       <T.Mesh geometry={geometries[12]} position={[690, -2000, 0]} rotation={[0, 0, -0.4]}>
         <T.MeshStandardMaterial color={textColors.orange} />
+        <Edges visible={false} color="black" />
       </T.Mesh>
 </Float>
     </T.Group>
