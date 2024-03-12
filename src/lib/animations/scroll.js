@@ -26,15 +26,15 @@ let cameraTimeline;
 const cameraPath = [
   {
     position: {
-    "x": 3.015974526392603,
-    "y": 3.2351878949386097,
-    "z": -1.225052308081005
+    "x": 1.95361252826141,
+    "y": 6.066993871132462,
+    "z": 2.437659419077292
 },
     rotation: {
     "isEuler": true,
-    "_x": 2.9190687923491523,
-    "_y": 0.8246167284790666,
-    "_z": -2.9769486704846746,
+    "_x": -0.99334756188645,
+    "_y": 0.3790184509589413,
+    "_z": 0.5164889247922129,
     "_order": "XYZ"
 },
   }, 
@@ -126,16 +126,46 @@ const cameraPath = [
 const cyan = new Color( 'cyan' );
 
 function strip(ref) {
-  ref.children[0].visible = true;
   ref.children[0].material.color = cyan;
+  ref.children[0].material.transparent = true;
+  ref.children[0].material.opacity = 0.0;
+  
+  animate({
+    targets: ref.children[0].material,
+    opacity: 1.0, 
+    duration: 1000,
+    easing: 'easeInQuad'
+  })
+
+  ref.children[0].visible = true;
   ref.material.transparent = true;
   animate({
     targets: ref.material,
     opacity: 0,
     duration: 1000,
-    easing: 'linear',
+    easing: 'easeInQuad',
   })
 
+}
+
+function colorize(ref) {
+  animate({
+    targets: ref.material,
+    opacity: 1.0,
+    easing: 'easeInQuad',
+    duration: 1000 
+  })
+  ref.children[0].material.visible = false
+}
+
+function deColorize(ref) {
+  animate({
+    targets: ref.material,
+    opacity: 0.0,
+    easing: 'easeInQuad',
+    duration: 1000 
+  })
+  ref.children[0].material.visible = true
 }
 
 export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef) {
@@ -333,6 +363,20 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
           strip(satelliteRefs.top_panel)
           strip(satelliteRefs.thin_panel_1)
           strip(satelliteRefs.thin_panel_2)
+
+          textRefs.forEach(element => {
+            element.children[0].visible = true
+            element.children[0].material.color = cyan;
+            element.material.visible = false
+          });
+
+          animate({
+            targets: satelliteRefs.top_panel.position,
+            y: 200.0,
+            easing: 'easeInQuad',
+            duration: 1000
+          })
+
         }
       })
 
@@ -341,6 +385,12 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[0].position.x,
         y: cameraPath[0].position.y,
         z: cameraPath[0].position.z,
+        begin: () => {
+          colorize(satelliteRefs.payload_body)
+        },
+        complete: () => {
+          deColorize(satelliteRefs.payload_body)
+        }
       })
 
       cameraTimeline.add({
@@ -355,6 +405,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[1].position.x,
         y: cameraPath[1].position.y,
         z: cameraPath[1].position.z,
+        begin: () => {
+          colorize(satelliteRefs.magnetorquer_1)
+          colorize(satelliteRefs.magnetorquer_2)
+        },
+        complete: () => {
+          deColorize(satelliteRefs.magnetorquer_1)
+          deColorize(satelliteRefs.magnetorquer_2)
+        }
       })
 
       cameraTimeline.add({
@@ -369,6 +427,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[2].position.x,
         y: cameraPath[2].position.y,
         z: cameraPath[2].position.z,
+        begin: () => {
+          colorize(satelliteRefs.MCU_1)
+          colorize(satelliteRefs.MCU_2)
+        },
+        complete: () => {
+          deColorize(satelliteRefs.MCU_1)
+          deColorize(satelliteRefs.MCU_2)
+        }
       })
 
       cameraTimeline.add({
@@ -383,6 +449,18 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[3].position.x,
         y: cameraPath[3].position.y,
         z: cameraPath[3].position.z,
+        begin: () => {
+          colorize(satelliteRefs.magnetometer_1)
+          colorize(satelliteRefs.magnetometer_1_handle)
+          colorize(satelliteRefs.magnetometer_2)
+          colorize(satelliteRefs.magnetometer_2_handle)
+        },
+        complete: () => {
+          deColorize(satelliteRefs.magnetometer_1)
+          deColorize(satelliteRefs.magnetometer_1_handle)
+          deColorize(satelliteRefs.magnetometer_2)
+          deColorize(satelliteRefs.magnetometer_2_handle)
+        }
       })
 
       cameraTimeline.add({
@@ -397,6 +475,16 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[4].position.x,
         y: cameraPath[4].position.y,
         z: cameraPath[4].position.z,
+        begin: () => {
+          colorize(satelliteRefs.battery_plate)
+          colorize(satelliteRefs.battery_cells)
+          colorize(satelliteRefs.battery_holder)
+        },
+        complete: () => {
+          deColorize(satelliteRefs.battery_plate)
+          deColorize(satelliteRefs.battery_cells)
+          deColorize(satelliteRefs.battery_holder)
+        }
       })
 
       cameraTimeline.add({
@@ -411,6 +499,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[5].position.x,
         y: cameraPath[5].position.y,
         z: cameraPath[5].position.z,
+        begin: () => {
+          colorize(satelliteRefs.solar_panel_left) 
+          colorize(satelliteRefs.solar_panel_right) 
+        },
+        complete: () => {
+          deColorize(satelliteRefs.solar_panel_left) 
+          deColorize(satelliteRefs.solar_panel_right) 
+        }
       })
 
       cameraTimeline.add({
@@ -425,6 +521,12 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[6].position.x,
         y: cameraPath[6].position.y,
         z: cameraPath[6].position.z,
+        begin: () => {
+          colorize(satelliteRefs.side_panel)
+        },
+        complete: () => {
+          deColorize(satelliteRefs.side_panel)
+        }
       })
 
       cameraTimeline.add({

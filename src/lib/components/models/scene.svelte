@@ -50,43 +50,43 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       <T.Mesh name="sixth_plane" geometry={gltf.nodes.sixth_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#011b35">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="fifth_plane" geometry={gltf.nodes.fifth_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#001222">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="fourth_plane" geometry={gltf.nodes.fourth_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#002341">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="third_plane" geometry={gltf.nodes.third_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#00315b">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="second_plane" geometry={gltf.nodes.second_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#003d72">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="first_plane" geometry={gltf.nodes.first_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#014d8f">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh visible={false} name="scene_cube" geometry={gltf.nodes.scene_cube.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
     </T.Group>
 
@@ -94,7 +94,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       <T.Mesh name="shooting_star" geometry={gltf.nodes.shooting_star.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#0000ff">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh
@@ -103,7 +103,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#ac2626">
         </T.MeshStandardMaterial>
-        <Edges visible={false} color="cyan" />
+        <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh
@@ -136,7 +136,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
 }
 `}
         />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
     </T.Group>
 
@@ -159,31 +159,31 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
         }
       `}
       />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
     </T.Mesh>
 
     <T.Mesh name="planet_four" geometry={gltf.nodes.plane_four.geometry}>
       <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#6b0404">
       </T.MeshStandardMaterial>
-       <Edges visible={false} color="#6b0404" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="#6b0404" />
     </T.Mesh>
 
     <T.Mesh name="planet_two" geometry={gltf.nodes.plane_two.geometry}>
       <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#351747">
       </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
     </T.Mesh>
 
     <T.Mesh name="planet_three" geometry={gltf.nodes.planet_three.geometry}>
       <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#103b39">
       </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
     </T.Mesh>
     
     <T.Mesh name="planet_one" geometry={gltf.nodes.planet_one.geometry}>
       <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#04435a">
       </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
     </T.Mesh>
 
       
@@ -200,7 +200,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
         }
         `}
         />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
     </T.Mesh>
 
 <!-- Discovery -->
@@ -213,7 +213,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       <T.Mesh name="discovery_emission_1" geometry={gltf.nodes.discovery_emission.geometry}>
        <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#fffff">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="discovery_emission_2" geometry={gltf.nodes.discovery_emission.geometry} scale={1.2}
@@ -248,13 +248,13 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
             }
 `}
           />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="discovery_propeller_emission_1" geometry={gltf.nodes.propeller_emission.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#fffff">
           </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="discovery_propeller_emission_2" geometry={gltf.nodes.propeller_emission.geometry} scale={1.01} position={[0, 0, 0.01]}>
@@ -287,19 +287,19 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
             }
 `}
           />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="discovery_black_body" geometry={gltf.nodes.discovery_black_body.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="discovery_white_body" geometry={gltf.nodes.discovery_white_body.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#727272">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
       
       <T.Mesh
@@ -308,7 +308,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#6d2e00">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh
@@ -317,7 +317,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#805504">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
     </T.Group>
     </Float>
@@ -330,24 +330,24 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
         position={[0, 0, 0]}
       >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000" />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="sputnik_white_body" geometry={gltf.nodes.sputnik_white_body.geometry} >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#696969">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
       <T.Mesh name="sputnik_yellow_body" geometry={gltf.nodes.sputnik_yellow_body.geometry} >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#8c4b0f">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
       <T.Mesh name="cube" geometry={gltf.nodes.Cube.geometry} >
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#000000">
         </T.MeshStandardMaterial>
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
       <T.Mesh 
         name="sputnik_solar_cells"
@@ -382,7 +382,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
           }
           `}
         />
-       <Edges visible={false} color="cyan" />
+       <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
     </T.Group>
 
