@@ -12,9 +12,9 @@ let finalState = [
   {position: {x: 185, y: -120, z: 0}},
   {position: {x: 280, y: -90, z: 0}},
   {position: {x: 375, y: -84, z: 0}},
-  {position: {x: 475, y: -120, z: 0}},
-  {position: {x: 575, y: -150, z: 0}},
-  {position: {x: 690, y: -200, z: 0}},
+  {position: {x: 465, y: -120, z: 0}},
+  {position: {x: 545, y: -150, z: 0}},
+  {position: {x: 630, y: -200, z: 0}},
 ]; 
 
 let orderOfAnimation = [];

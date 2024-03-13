@@ -63,9 +63,7 @@ useFrame((_, delta) => {
   position={[10, 5, 1]}
   bind:ref={cameraRef}
 >
- <OrbitControls 
- enableDamping
- />
+  <OrbitControls enableDamping />
 </T.PerspectiveCamera>
 
 <Float

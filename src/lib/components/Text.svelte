@@ -13,7 +13,7 @@ const component = forwardEventHandlers()
 
 
 const loader = new FontLoader();
-loader.load( '/fonts/copyduck.json', function ( font ) {
+loader.load( '/fonts/origin_tech.json', function ( font ) {
 
   const options = {
 		font: font,
