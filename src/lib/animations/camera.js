@@ -1,4 +1,5 @@
 import animate from 'animejs';
+import { animationStore } from '$lib/stores/animations.js'
 
 const camerainitialState = {
   position: [0, 0, 0],
@@ -45,124 +46,138 @@ const cameraStates = {
 
 export function cameraAnimation(cameraRef){
 
-  const duration = 1500;
+  animationStore.subscribe((value) => {
+    if(value.isIntroDone && !value.isSectionOneCameraAnimationDone){
+      
+      const duration = 1500;
 
-  var timeline = animate.timeline({
-    easing: 'easeInOutExpo',
-    duration: duration,
+      var timeline = animate.timeline({
+        easing: 'easeInOutExpo',
+        duration: duration,
+      })
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.satelliteBatteryZoom.position[0],
+        y: cameraStates.satelliteBatteryZoom.position[1],
+        z: cameraStates.satelliteBatteryZoom.position[2],
+      }, `+=800`)
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.satelliteBatteryZoom.rotation[0],
+        y: cameraStates.satelliteBatteryZoom.rotation[1],
+        z: cameraStates.satelliteBatteryZoom.rotation[2],
+      },`-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.batteryZoom.position[0],
+        y: cameraStates.batteryZoom.position[1],
+        z: cameraStates.batteryZoom.position[2],
+      }, '+=500')
+
+      timeline.add({
+        tragets: cameraRef.rotation,
+        x: cameraStates.batteryZoom.rotation[0],
+        y: cameraStates.batteryZoom.rotation[1],
+        z: cameraStates.batteryZoom.rotation[2],
+      }, `-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.satelliteMagnetometerZoom.position[0],
+        y: cameraStates.satelliteMagnetometerZoom.position[1],
+        z: cameraStates.satelliteMagnetometerZoom.position[2],
+      }, `+=400`)
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.satelliteMagnetometerZoom.rotation[0],
+        y: cameraStates.satelliteMagnetometerZoom.rotation[1],
+        z: cameraStates.satelliteMagnetometerZoom.rotation[2],
+      },`-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.magnetometerZoom.position[0],
+        y: cameraStates.magnetometerZoom.position[1],
+        z: cameraStates.magnetometerZoom.position[2],
+      }, `-=300`)
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.magnetometerZoom.rotation[0],
+        y: cameraStates.magnetometerZoom.rotation[1],
+        z: cameraStates.magnetometerZoom.rotation[2],
+      }, `-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.satelliteMcuZoom.position[0],
+        y: cameraStates.satelliteMcuZoom.position[1],
+        z: cameraStates.satelliteMcuZoom.position[2],
+      }, `+=600`)
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.satelliteMcuZoom.rotation[0],
+        y: cameraStates.satelliteMcuZoom.rotation[1],
+        z: cameraStates.satelliteMcuZoom.rotation[2],
+      },`-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.satellitePayloadZoom.position[0],
+        y: cameraStates.satellitePayloadZoom.position[1],
+        z: cameraStates.satellitePayloadZoom.position[2],
+      })
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.satellitePayloadZoom.rotation[0],
+        y: cameraStates.satellitePayloadZoom.rotation[1],
+        z: cameraStates.satellitePayloadZoom.rotation[2],
+      },`-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.satelliteSolarPanelsZoom.position[0],
+        y: cameraStates.satelliteSolarPanelsZoom.position[1],
+        z: cameraStates.satelliteSolarPanelsZoom.position[2],
+      })
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.satelliteSolarPanelsZoom.rotation[0],
+        y: cameraStates.satelliteSolarPanelsZoom.rotation[1],
+        z: cameraStates.satelliteSolarPanelsZoom.rotation[2],
+      },`-=${duration}`)
+
+      timeline.add({
+        targets: cameraRef.position,
+        x: cameraStates.satelliteStructureZoom.position[0],
+        y: cameraStates.satelliteStructureZoom.position[1],
+        z: cameraStates.satelliteStructureZoom.position[2],
+      })
+
+      timeline.add({
+        targets: cameraRef.rotation,
+        x: cameraStates.satelliteStructureZoom.rotation[0],
+        y: cameraStates.satelliteStructureZoom.rotation[1],
+        z: cameraStates.satelliteStructureZoom.rotation[2],
+        complete: () => {
+          animationStore.update((value) => {
+            return {
+              ...value,
+              isSectionOneCameraAnimationDone: true
+            }
+          })
+        }
+      },`-=${duration}`)
+    }
   })
 
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.satelliteBatteryZoom.position[0],
-    y: cameraStates.satelliteBatteryZoom.position[1],
-    z: cameraStates.satelliteBatteryZoom.position[2],
-  }, `+=800`)
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.satelliteBatteryZoom.rotation[0],
-    y: cameraStates.satelliteBatteryZoom.rotation[1],
-    z: cameraStates.satelliteBatteryZoom.rotation[2],
-  },`-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.batteryZoom.position[0],
-    y: cameraStates.batteryZoom.position[1],
-    z: cameraStates.batteryZoom.position[2],
-  }, '+=500')
-
-  timeline.add({
-    tragets: cameraRef.rotation,
-    x: cameraStates.batteryZoom.rotation[0],
-    y: cameraStates.batteryZoom.rotation[1],
-    z: cameraStates.batteryZoom.rotation[2],
-  }, `-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.satelliteMagnetometerZoom.position[0],
-    y: cameraStates.satelliteMagnetometerZoom.position[1],
-    z: cameraStates.satelliteMagnetometerZoom.position[2],
-  }, `+=400`)
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.satelliteMagnetometerZoom.rotation[0],
-    y: cameraStates.satelliteMagnetometerZoom.rotation[1],
-    z: cameraStates.satelliteMagnetometerZoom.rotation[2],
-  },`-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.magnetometerZoom.position[0],
-    y: cameraStates.magnetometerZoom.position[1],
-    z: cameraStates.magnetometerZoom.position[2],
-  }, `-=300`)
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.magnetometerZoom.rotation[0],
-    y: cameraStates.magnetometerZoom.rotation[1],
-    z: cameraStates.magnetometerZoom.rotation[2],
-  }, `-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.satelliteMcuZoom.position[0],
-    y: cameraStates.satelliteMcuZoom.position[1],
-    z: cameraStates.satelliteMcuZoom.position[2],
-  }, `+=600`)
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.satelliteMcuZoom.rotation[0],
-    y: cameraStates.satelliteMcuZoom.rotation[1],
-    z: cameraStates.satelliteMcuZoom.rotation[2],
-  },`-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.satellitePayloadZoom.position[0],
-    y: cameraStates.satellitePayloadZoom.position[1],
-    z: cameraStates.satellitePayloadZoom.position[2],
-  })
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.satellitePayloadZoom.rotation[0],
-    y: cameraStates.satellitePayloadZoom.rotation[1],
-    z: cameraStates.satellitePayloadZoom.rotation[2],
-  },`-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.satelliteSolarPanelsZoom.position[0],
-    y: cameraStates.satelliteSolarPanelsZoom.position[1],
-    z: cameraStates.satelliteSolarPanelsZoom.position[2],
-  })
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.satelliteSolarPanelsZoom.rotation[0],
-    y: cameraStates.satelliteSolarPanelsZoom.rotation[1],
-    z: cameraStates.satelliteSolarPanelsZoom.rotation[2],
-  },`-=${duration}`)
-
-  timeline.add({
-    targets: cameraRef.position,
-    x: cameraStates.satelliteStructureZoom.position[0],
-    y: cameraStates.satelliteStructureZoom.position[1],
-    z: cameraStates.satelliteStructureZoom.position[2],
-  })
-
-  timeline.add({
-    targets: cameraRef.rotation,
-    x: cameraStates.satelliteStructureZoom.rotation[0],
-    y: cameraStates.satelliteStructureZoom.rotation[1],
-    z: cameraStates.satelliteStructureZoom.rotation[2],
-  },`-=${duration}`)
 
 
 }

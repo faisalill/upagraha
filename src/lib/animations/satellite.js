@@ -187,7 +187,7 @@ const initialSatelliteTransforms = {
 function setupNonPositionTransforms (satelliteRef) {
 
   animationStore.subscribe((value) => {
-    // console.log(value)
+    console.log(value)
   })
 
   satelliteRef.children[0].rotation.x = finalSatelliteTransforms.top_panel.rotation[0]
@@ -400,207 +400,213 @@ function setupInitialSatellitePartsPosition (satelliteRef) {
 
 export function initialSatelliteAnimation(satelliteRef) {
 
-  setupNonPositionTransforms(satelliteRef)
+  animationStore.subscribe((value) => {
+    if( value.isIntroDone && !value.isSectionOneSatelliteAnimationDone){
 
-  setupInitialSatellitePartsPosition(satelliteRef)
+      setupNonPositionTransforms(satelliteRef)
 
-  var animateTimeline = animate.timeline({
-    easing: "easeOutExpo",
-    duration: 800,
-  })
+      setupInitialSatellitePartsPosition(satelliteRef)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[4].position,
-    x: finalSatelliteTransforms.side_panel.position[0],
-    y: finalSatelliteTransforms.side_panel.position[1],
-    z: finalSatelliteTransforms.side_panel.position[2],
-  }, '+=450')
+      var animateTimeline = animate.timeline({
+        easing: "easeOutExpo",
+        duration: 800,
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[1].position,
-    x: finalSatelliteTransforms.mid_panels.position[0],
-    y: finalSatelliteTransforms.mid_panels.position[1],
-    z: finalSatelliteTransforms.mid_panels.position[2],
-  }) 
+      animateTimeline.add({
+        targets: satelliteRef.children[4].position,
+        x: finalSatelliteTransforms.side_panel.position[0],
+        y: finalSatelliteTransforms.side_panel.position[1],
+        z: finalSatelliteTransforms.side_panel.position[2],
+      }, '+=450')
 
-  animateTimeline.add({
-    targets: satelliteRef.children[18].position,
-    x: finalSatelliteTransforms.battery_holder.position[0],
-    y: finalSatelliteTransforms.battery_holder.position[1],
-    z: finalSatelliteTransforms.battery_holder.position[2],
-  })
+      animateTimeline.add({
+        targets: satelliteRef.children[1].position,
+        x: finalSatelliteTransforms.mid_panels.position[0],
+        y: finalSatelliteTransforms.mid_panels.position[1],
+        z: finalSatelliteTransforms.mid_panels.position[2],
+      }) 
 
-  const batteryOffset = 500;
+      animateTimeline.add({
+        targets: satelliteRef.children[18].position,
+        x: finalSatelliteTransforms.battery_holder.position[0],
+        y: finalSatelliteTransforms.battery_holder.position[1],
+        z: finalSatelliteTransforms.battery_holder.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[19].position,
-    x: finalSatelliteTransforms.battery_plate.position[0],
-    y: finalSatelliteTransforms.battery_plate.position[1],
-    z: finalSatelliteTransforms.battery_plate.position[2],
-  }, `-=${batteryOffset}`)
+      const batteryOffset = 500;
 
-  animateTimeline.add({
-    targets: satelliteRef.children[20].position,
-    x: finalSatelliteTransforms.battery_cells.position[0],
-    y: finalSatelliteTransforms.battery_cells.position[1],
-    z: finalSatelliteTransforms.battery_cells.position[2],
-  }, `-=${batteryOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[19].position,
+        x: finalSatelliteTransforms.battery_plate.position[0],
+        y: finalSatelliteTransforms.battery_plate.position[1],
+        z: finalSatelliteTransforms.battery_plate.position[2],
+      }, `-=${batteryOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[6].position,
-    x: finalSatelliteTransforms.thin_panel_2.position[0],
-    y: finalSatelliteTransforms.thin_panel_2.position[1],
-    z: finalSatelliteTransforms.thin_panel_2.position[2],
-  })
+      animateTimeline.add({
+        targets: satelliteRef.children[20].position,
+        x: finalSatelliteTransforms.battery_cells.position[0],
+        y: finalSatelliteTransforms.battery_cells.position[1],
+        z: finalSatelliteTransforms.battery_cells.position[2],
+      }, `-=${batteryOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[14].position,
-    x: finalSatelliteTransforms.magnetometer_1.position[0],
-    y: finalSatelliteTransforms.magnetometer_1.position[1],
-    z: finalSatelliteTransforms.magnetometer_1.position[2],
-  })
+      animateTimeline.add({
+        targets: satelliteRef.children[6].position,
+        x: finalSatelliteTransforms.thin_panel_2.position[0],
+        y: finalSatelliteTransforms.thin_panel_2.position[1],
+        z: finalSatelliteTransforms.thin_panel_2.position[2],
+      })
 
-  const magnetometerOffset = 650;
+      animateTimeline.add({
+        targets: satelliteRef.children[14].position,
+        x: finalSatelliteTransforms.magnetometer_1.position[0],
+        y: finalSatelliteTransforms.magnetometer_1.position[1],
+        z: finalSatelliteTransforms.magnetometer_1.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[17].position,
-    x: finalSatelliteTransforms.magnetometer_1_handle.position[0],
-    y: finalSatelliteTransforms.magnetometer_1_handle.position[1],
-    z: finalSatelliteTransforms.magnetometer_1_handle.position[2],
-  }, `-=${magnetometerOffset}`)
+      const magnetometerOffset = 650;
 
-  animateTimeline.add({
-    targets: satelliteRef.children[15].position,
-    x: finalSatelliteTransforms.magnetometer_2.position[0],
-    y: finalSatelliteTransforms.magnetometer_2.position[1],
-    z: finalSatelliteTransforms.magnetometer_2.position[2],
-  })
+      animateTimeline.add({
+        targets: satelliteRef.children[17].position,
+        x: finalSatelliteTransforms.magnetometer_1_handle.position[0],
+        y: finalSatelliteTransforms.magnetometer_1_handle.position[1],
+        z: finalSatelliteTransforms.magnetometer_1_handle.position[2],
+      }, `-=${magnetometerOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[16].position,
-    x: finalSatelliteTransforms.magnetometer_2_handle.position[0],
-    y: finalSatelliteTransforms.magnetometer_2_handle.position[1],
-    z: finalSatelliteTransforms.magnetometer_2_handle.position[2],
-  }, `-=${magnetometerOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[15].position,
+        x: finalSatelliteTransforms.magnetometer_2.position[0],
+        y: finalSatelliteTransforms.magnetometer_2.position[1],
+        z: finalSatelliteTransforms.magnetometer_2.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[5].position,
-    x: finalSatelliteTransforms.thin_panel_1.position[0],
-    y: finalSatelliteTransforms.thin_panel_1.position[1],
-    z: finalSatelliteTransforms.thin_panel_1.position[2],
-  })
+      animateTimeline.add({
+        targets: satelliteRef.children[16].position,
+        x: finalSatelliteTransforms.magnetometer_2_handle.position[0],
+        y: finalSatelliteTransforms.magnetometer_2_handle.position[1],
+        z: finalSatelliteTransforms.magnetometer_2_handle.position[2],
+      }, `-=${magnetometerOffset}`)
 
-  const mcuOffset = 550;
+      animateTimeline.add({
+        targets: satelliteRef.children[5].position,
+        x: finalSatelliteTransforms.thin_panel_1.position[0],
+        y: finalSatelliteTransforms.thin_panel_1.position[1],
+        z: finalSatelliteTransforms.thin_panel_1.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[7].position,
-    x: finalSatelliteTransforms.mcu_1.position[0],
-    y: finalSatelliteTransforms.mcu_1.position[1],
-    z: finalSatelliteTransforms.mcu_1.position[2],
-  })
+      const mcuOffset = 550;
 
-  animateTimeline.add({
-    targets: satelliteRef.children[8].position,
-    x: finalSatelliteTransforms.mcu_2.position[0],
-    y: finalSatelliteTransforms.mcu_2.position[1],
-    z: finalSatelliteTransforms.mcu_2.position[2],
-  }, `-=${mcuOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[7].position,
+        x: finalSatelliteTransforms.mcu_1.position[0],
+        y: finalSatelliteTransforms.mcu_1.position[1],
+        z: finalSatelliteTransforms.mcu_1.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[9].position,
-    x: finalSatelliteTransforms.magnetorquer_1.position[0],
-    y: finalSatelliteTransforms.magnetorquer_1.position[1],
-    z: finalSatelliteTransforms.magnetorquer_1.position[2],
-  })
+      animateTimeline.add({
+        targets: satelliteRef.children[8].position,
+        x: finalSatelliteTransforms.mcu_2.position[0],
+        y: finalSatelliteTransforms.mcu_2.position[1],
+        z: finalSatelliteTransforms.mcu_2.position[2],
+      }, `-=${mcuOffset}`)
 
-  const magnetorquerOffset = 600;
+      animateTimeline.add({
+        targets: satelliteRef.children[9].position,
+        x: finalSatelliteTransforms.magnetorquer_1.position[0],
+        y: finalSatelliteTransforms.magnetorquer_1.position[1],
+        z: finalSatelliteTransforms.magnetorquer_1.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[10].position,
-    x: finalSatelliteTransforms.magnetorquer_2.position[0],
-    y: finalSatelliteTransforms.magnetorquer_2.position[1],
-    z: finalSatelliteTransforms.magnetorquer_2.position[2],
-  }, `-=${magnetorquerOffset}`)
+      const magnetorquerOffset = 600;
 
-  const payloadOffset = 700;
+      animateTimeline.add({
+        targets: satelliteRef.children[10].position,
+        x: finalSatelliteTransforms.magnetorquer_2.position[0],
+        y: finalSatelliteTransforms.magnetorquer_2.position[1],
+        z: finalSatelliteTransforms.magnetorquer_2.position[2],
+      }, `-=${magnetorquerOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[11].position,
-    x: finalSatelliteTransforms.payload_body.position[0],
-    y: finalSatelliteTransforms.payload_body.position[1],
-    z: finalSatelliteTransforms.payload_body.position[2],
-  })
+      const payloadOffset = 700;
 
-  animateTimeline.add({
-    targets: satelliteRef.children[12].position,
-    x: finalSatelliteTransforms.payload_pins.position[0],
-    y: finalSatelliteTransforms.payload_pins.position[1],
-    z: finalSatelliteTransforms.payload_pins.position[2],
-  }, `-=${payloadOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[11].position,
+        x: finalSatelliteTransforms.payload_body.position[0],
+        y: finalSatelliteTransforms.payload_body.position[1],
+        z: finalSatelliteTransforms.payload_body.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[13].position,
-    x: finalSatelliteTransforms.payload_knob.position[0],
-    y: finalSatelliteTransforms.payload_knob.position[1],
-    z: finalSatelliteTransforms.payload_knob.position[2],
-  }, `-=${payloadOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[12].position,
+        x: finalSatelliteTransforms.payload_pins.position[0],
+        y: finalSatelliteTransforms.payload_pins.position[1],
+        z: finalSatelliteTransforms.payload_pins.position[2],
+      }, `-=${payloadOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[2].position,
-    x: finalSatelliteTransforms.payload_lens.position[0],
-    y: finalSatelliteTransforms.payload_lens.position[1],
-    z: finalSatelliteTransforms.payload_lens.position[2],
-  }, `-=${payloadOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[13].position,
+        x: finalSatelliteTransforms.payload_knob.position[0],
+        y: finalSatelliteTransforms.payload_knob.position[1],
+        z: finalSatelliteTransforms.payload_knob.position[2],
+      }, `-=${payloadOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[3].position,
-    x: finalSatelliteTransforms.lens_light.position[0],
-    y: finalSatelliteTransforms.lens_light.position[1],
-    z: finalSatelliteTransforms.lens_light.position[2],
-  }, `-=${payloadOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[2].position,
+        x: finalSatelliteTransforms.payload_lens.position[0],
+        y: finalSatelliteTransforms.payload_lens.position[1],
+        z: finalSatelliteTransforms.payload_lens.position[2],
+      }, `-=${payloadOffset}`)
 
-  const solarPanelOffset = 750;
+      animateTimeline.add({
+        targets: satelliteRef.children[3].position,
+        x: finalSatelliteTransforms.lens_light.position[0],
+        y: finalSatelliteTransforms.lens_light.position[1],
+        z: finalSatelliteTransforms.lens_light.position[2],
+      }, `-=${payloadOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[21].position,
-    x: finalSatelliteTransforms.solar_panel_right.position[0],
-    y: finalSatelliteTransforms.solar_panel_right.position[1],
-    z: finalSatelliteTransforms.solar_panel_right.position[2],
-  })
+      const solarPanelOffset = 750;
 
-  animateTimeline.add({
-    targets: satelliteRef.children[22].position,
-    x: finalSatelliteTransforms.solar_panel_left.position[0],
-    y: finalSatelliteTransforms.solar_panel_left.position[1],
-    z: finalSatelliteTransforms.solar_panel_left.position[2],
-  }, `-=${solarPanelOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[21].position,
+        x: finalSatelliteTransforms.solar_panel_right.position[0],
+        y: finalSatelliteTransforms.solar_panel_right.position[1],
+        z: finalSatelliteTransforms.solar_panel_right.position[2],
+      })
 
-  animateTimeline.add({
-    targets: satelliteRef.children[23].position,
-    x: finalSatelliteTransforms.solar_cells_left.position[0],
-    y: finalSatelliteTransforms.solar_cells_left.position[1],
-    z: finalSatelliteTransforms.solar_cells_left.position[2],
-  }, `-=${solarPanelOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[22].position,
+        x: finalSatelliteTransforms.solar_panel_left.position[0],
+        y: finalSatelliteTransforms.solar_panel_left.position[1],
+        z: finalSatelliteTransforms.solar_panel_left.position[2],
+      }, `-=${solarPanelOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[24].position,
-    x: finalSatelliteTransforms.solar_cells_right.position[0],
-    y: finalSatelliteTransforms.solar_cells_right.position[1],
-    z: finalSatelliteTransforms.solar_cells_right.position[2],
-  }, `-=${solarPanelOffset}`)
+      animateTimeline.add({
+        targets: satelliteRef.children[23].position,
+        x: finalSatelliteTransforms.solar_cells_left.position[0],
+        y: finalSatelliteTransforms.solar_cells_left.position[1],
+        z: finalSatelliteTransforms.solar_cells_left.position[2],
+      }, `-=${solarPanelOffset}`)
 
-  animateTimeline.add({
-    targets: satelliteRef.children[0].position,
-    x: finalSatelliteTransforms.top_panel.position[0],
-    y: finalSatelliteTransforms.top_panel.position[1],
-    z: finalSatelliteTransforms.top_panel.position[2],
-    complete: () => {
-      animationStore.update((value) => {
-        return {
-          ...value,
-          isSectionOneSatelliteAnimationDone: true
+      animateTimeline.add({
+        targets: satelliteRef.children[24].position,
+        x: finalSatelliteTransforms.solar_cells_right.position[0],
+        y: finalSatelliteTransforms.solar_cells_right.position[1],
+        z: finalSatelliteTransforms.solar_cells_right.position[2],
+      }, `-=${solarPanelOffset}`)
+
+      animateTimeline.add({
+        targets: satelliteRef.children[0].position,
+        x: finalSatelliteTransforms.top_panel.position[0],
+        y: finalSatelliteTransforms.top_panel.position[1],
+        z: finalSatelliteTransforms.top_panel.position[2],
+        complete: () => {
+          animationStore.update((value) => {
+            return {
+              ...value,
+              isSectionOneSatelliteAnimationDone: true
+            }
+          })
         }
       })
-    }
-  })
+      }
+    }) 
+  
 }

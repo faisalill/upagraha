@@ -25,6 +25,22 @@ let cameraTimeline;
 
 const cameraPath = [
   {
+    position: 
+      {
+          "x": 5.960559075011123,
+          "y": 3.4336360463252333,
+          "z": 0.5706122282319428
+      },
+    rotation: 
+      {
+          "isEuler": true,
+          "_x": 1.5705112093227678,
+          "_y": 1.42804894738009,
+          "_z": -1.5705082795604284,
+          "_order": "XYZ"
+      }
+  },
+  {
     position: {
     "x": 1.95361252826141,
     "y": 6.066993871132462,
@@ -121,7 +137,41 @@ const cameraPath = [
     "_order": "XYZ"
 }
   },
-]
+{
+  position: 
+{
+    "x": 12.27243250935472,
+    "y": 4.034611469560477,
+    "z": 1.22556820438941
+},
+  rotation: 
+{
+    "isEuler": true,
+    "_x": 0.6735293378523349,
+    "_y": 1.4870563471297482,
+    "_z": -0.6718186058336377,
+    "_order": "XYZ"
+}
+},
+];
+
+const textDispersePositionY = -900;
+
+let textPosition = [
+  {position: {x: 0, y: 0, z: 0}},
+  {position: {x: 85, y: 25, z: 0}},
+  {position: {x: 210, y: 50, z: 0}},
+  {position: {x: 295, y: 25, z: 0}},
+  {position: {x: 390, y: 0, z: 0}},
+  {position: {x: 0, y: -200, z: 0}},
+  {position: {x: 95, y: -150, z: 0}},
+  {position: {x: 185, y: -120, z: 0}},
+  {position: {x: 280, y: -90, z: 0}},
+  {position: {x: 375, y: -84, z: 0}},
+  {position: {x: 465, y: -120, z: 0}},
+  {position: {x: 545, y: -150, z: 0}},
+  {position: {x: 630, y: -200, z: 0}},
+]; 
 
 const cyan = new Color( 'cyan' );
 
@@ -166,6 +216,27 @@ function deColorize(ref) {
     duration: 1000 
   })
   ref.children[0].material.visible = true
+}
+
+function showInfo() {
+  animate({
+    targets: '.info', 
+    top: "25%",
+  })
+}
+
+function disperseInfo(direction) {
+  if(direction == "down"){
+    animate({
+      targets: '.info', 
+      top: "125%",
+    })
+  } else {
+    animate({
+      targets: '.info', 
+      top: "-125%",
+    })
+  }
 }
 
 export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef) {
@@ -228,7 +299,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[12].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.sixth_plane)
         }
@@ -236,7 +307,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[11].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.fifth_plane)
           strip(sceneRefs.stars_1)
@@ -245,7 +316,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[10].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.fourth_plane)
           strip(sceneRefs.stars_2)
@@ -254,7 +325,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[9].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.third_plane)
         }
@@ -262,7 +333,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[8].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.second_plane)
         }
@@ -270,7 +341,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[7].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.first_plane)
         }
@@ -278,7 +349,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[6].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.planet_two)
           strip(sceneRefs.discovery_emission_1)
@@ -294,7 +365,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[5].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.shooting_star)
           strip(sceneRefs.shooting_star_trajectory)
@@ -305,7 +376,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[4].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.planet_three)
         }
@@ -313,14 +384,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[3].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
         }
       })
 
       textTimeline.add({
         targets: textRefs[2].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.planet_one)
         }
@@ -328,7 +399,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[1].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.planet_five)
           strip(sceneRefs.sputnik_black_body)
@@ -339,7 +410,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
 
       textTimeline.add({
         targets: textRefs[0].position,
-        y: -2000,
+        y: textDispersePositionY,
         complete: () => {
           strip(satelliteRefs.MCU_1)
           strip(satelliteRefs.MCU_2)
@@ -385,12 +456,6 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         x: cameraPath[0].position.x,
         y: cameraPath[0].position.y,
         z: cameraPath[0].position.z,
-        begin: () => {
-          colorize(satelliteRefs.payload_body)
-        },
-        complete: () => {
-          deColorize(satelliteRefs.payload_body)
-        }
       })
 
       cameraTimeline.add({
@@ -406,12 +471,12 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: cameraPath[1].position.y,
         z: cameraPath[1].position.z,
         begin: () => {
-          colorize(satelliteRefs.magnetorquer_1)
-          colorize(satelliteRefs.magnetorquer_2)
+          colorize(satelliteRefs.payload_body);
+          showInfo();
         },
         complete: () => {
-          deColorize(satelliteRefs.magnetorquer_1)
-          deColorize(satelliteRefs.magnetorquer_2)
+          deColorize(satelliteRefs.payload_body)
+          disperseInfo("down");
         }
       })
 
@@ -428,12 +493,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: cameraPath[2].position.y,
         z: cameraPath[2].position.z,
         begin: () => {
-          colorize(satelliteRefs.MCU_1)
-          colorize(satelliteRefs.MCU_2)
+          colorize(satelliteRefs.magnetorquer_1)
+          colorize(satelliteRefs.magnetorquer_2)
+          showInfo();
         },
         complete: () => {
-          deColorize(satelliteRefs.MCU_1)
-          deColorize(satelliteRefs.MCU_2)
+          deColorize(satelliteRefs.magnetorquer_1)
+          deColorize(satelliteRefs.magnetorquer_2)
+          disperseInfo("up");
         }
       })
 
@@ -450,16 +517,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: cameraPath[3].position.y,
         z: cameraPath[3].position.z,
         begin: () => {
-          colorize(satelliteRefs.magnetometer_1)
-          colorize(satelliteRefs.magnetometer_1_handle)
-          colorize(satelliteRefs.magnetometer_2)
-          colorize(satelliteRefs.magnetometer_2_handle)
+          colorize(satelliteRefs.MCU_1)
+          colorize(satelliteRefs.MCU_2)
+          showInfo();
         },
         complete: () => {
-          deColorize(satelliteRefs.magnetometer_1)
-          deColorize(satelliteRefs.magnetometer_1_handle)
-          deColorize(satelliteRefs.magnetometer_2)
-          deColorize(satelliteRefs.magnetometer_2_handle)
+          deColorize(satelliteRefs.MCU_1)
+          deColorize(satelliteRefs.MCU_2)
+          disperseInfo("down")
         }
       })
 
@@ -476,14 +541,18 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: cameraPath[4].position.y,
         z: cameraPath[4].position.z,
         begin: () => {
-          colorize(satelliteRefs.battery_plate)
-          colorize(satelliteRefs.battery_cells)
-          colorize(satelliteRefs.battery_holder)
+          colorize(satelliteRefs.magnetometer_1)
+          colorize(satelliteRefs.magnetometer_1_handle)
+          colorize(satelliteRefs.magnetometer_2)
+          colorize(satelliteRefs.magnetometer_2_handle)
+          showInfo();
         },
         complete: () => {
-          deColorize(satelliteRefs.battery_plate)
-          deColorize(satelliteRefs.battery_cells)
-          deColorize(satelliteRefs.battery_holder)
+          deColorize(satelliteRefs.magnetometer_1)
+          deColorize(satelliteRefs.magnetometer_1_handle)
+          deColorize(satelliteRefs.magnetometer_2)
+          deColorize(satelliteRefs.magnetometer_2_handle)
+          disperseInfo("up");
         }
       })
 
@@ -500,12 +569,16 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: cameraPath[5].position.y,
         z: cameraPath[5].position.z,
         begin: () => {
-          colorize(satelliteRefs.solar_panel_left) 
-          colorize(satelliteRefs.solar_panel_right) 
+          colorize(satelliteRefs.battery_plate)
+          colorize(satelliteRefs.battery_cells)
+          colorize(satelliteRefs.battery_holder)
+          showInfo();
         },
         complete: () => {
-          deColorize(satelliteRefs.solar_panel_left) 
-          deColorize(satelliteRefs.solar_panel_right) 
+          deColorize(satelliteRefs.battery_plate)
+          deColorize(satelliteRefs.battery_cells)
+          deColorize(satelliteRefs.battery_holder)
+          disperseInfo("down");
         }
       })
 
@@ -522,10 +595,14 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: cameraPath[6].position.y,
         z: cameraPath[6].position.z,
         begin: () => {
-          colorize(satelliteRefs.side_panel)
+          colorize(satelliteRefs.solar_panel_left) 
+          colorize(satelliteRefs.solar_panel_right) 
+          showInfo();
         },
         complete: () => {
-          deColorize(satelliteRefs.side_panel)
+          deColorize(satelliteRefs.solar_panel_left) 
+          deColorize(satelliteRefs.solar_panel_right) 
+          disperseInfo("up");
         }
       })
 
@@ -536,6 +613,99 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         z: cameraPath[6].rotation._z,
         complete: () => {
         }
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[7].position.x,
+        y: cameraPath[7].position.y,
+        z: cameraPath[7].position.z,
+        begin: () => {
+          colorize(satelliteRefs.side_panel)
+          showInfo();
+        },
+        complete: () => {
+          deColorize(satelliteRefs.side_panel)
+          disperseInfo("down");
+        }
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[7].rotation._x,
+        y: cameraPath[7].rotation._y,
+        z: cameraPath[7].rotation._z,
+      }, `-=${cameraTimelineDuration}`)
+
+      cameraTimeline.add({
+        targets: cameraRef.position,
+        x: cameraPath[8].position.x,
+        y: cameraPath[8].position.y,
+        z: cameraPath[8].position.z,
+        begin: () => {
+          const timeline = animate.timeline({
+          });
+
+          timeline.add({
+            targets: textRefs[12].position,
+            y: textPosition[12].position.y
+          })
+          timeline.add({
+            targets: textRefs[11].position,
+            y: textPosition[11].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[10].position,
+            y: textPosition[10].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[9].position,
+            y: textPosition[9].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[8].position,
+            y: textPosition[8].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[7].position,
+            y: textPosition[7].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[6].position,
+            y: textPosition[6].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[5].position,
+            y: textPosition[5].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[4].position,
+            y: textPosition[4].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[3].position,
+            y: textPosition[3].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[2].position,
+            y: textPosition[2].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[1].position,
+            y: textPosition[1].position.y
+          }, `-=900`)
+          timeline.add({
+            targets: textRefs[0].position,
+            y: textPosition[0].position.y
+          }, `-=900`)
+        }
+      })
+
+      cameraTimeline.add({
+        targets: cameraRef.rotation,
+        x: cameraPath[8].rotation._x,
+        y: cameraPath[8].rotation._y,
+        z: cameraPath[8].rotation._z,
       }, `-=${cameraTimelineDuration}`)
     }
   })
