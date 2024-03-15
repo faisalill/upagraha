@@ -44,11 +44,14 @@ const cameraStates = {
   }
 }
 
+let animated = false;
 export function cameraAnimation(cameraRef){
 
   animationStore.subscribe((value) => {
     if(value.isIntroDone && !value.isSectionOneCameraAnimationDone){
-      
+      if(!animated) {
+        animated = true;
+
       const duration = 1500;
 
       var timeline = animate.timeline({
@@ -61,7 +64,7 @@ export function cameraAnimation(cameraRef){
         x: cameraStates.satelliteBatteryZoom.position[0],
         y: cameraStates.satelliteBatteryZoom.position[1],
         z: cameraStates.satelliteBatteryZoom.position[2],
-      }, `+=800`)
+      })
 
       timeline.add({
         targets: cameraRef.rotation,
@@ -175,11 +178,9 @@ export function cameraAnimation(cameraRef){
           })
         }
       },`-=${duration}`)
+      }
     }
   })
-
-
-
 }
 
 

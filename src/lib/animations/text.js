@@ -19,11 +19,14 @@ let finalState = [
 
 let orderOfAnimation = [];
 
+let animated = false;
 export function textAnimation(textRef){
 
 
   animationStore.subscribe((value) => {
     if(value.isSectionOneSatelliteAnimationDone && !value.isSectionOneTextAnimationDone) {
+      if(!animated) {
+        animated = true;
 
       textRef.traverse((child) => {
         if(child.isMesh) {
@@ -148,6 +151,8 @@ export function textAnimation(textRef){
           })
         }
       }, `-=${delay}`)
+      }
+
     }
   })
 }
