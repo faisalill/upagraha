@@ -45,7 +45,7 @@ const cameraStates = {
 }
 
 let animated = false;
-export function cameraAnimation(cameraRef){
+export function cameraAnimation(cameraRef, satelliteRef){
 
   animationStore.subscribe((value) => {
     if(value.isIntroDone && !value.isSectionOneCameraAnimationDone){
@@ -64,6 +64,14 @@ export function cameraAnimation(cameraRef){
         x: cameraStates.satelliteBatteryZoom.position[0],
         y: cameraStates.satelliteBatteryZoom.position[1],
         z: cameraStates.satelliteBatteryZoom.position[2],
+        begin: () => {
+           animate({
+            targets: satelliteRef.position,
+            y: 0,
+            easing: "linear",
+            delay: 500
+            })
+          }
       })
 
       timeline.add({

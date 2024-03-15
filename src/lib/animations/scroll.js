@@ -2,7 +2,6 @@ import animate from 'animejs';
 import { animationStore } from '$lib/stores/animations.js';
 import { Color, DoubleSide } from 'three';
 import HolographicMaterial from '$lib/materials/HolographicMaterial.js';
-
 const holographicMaterial = new HolographicMaterial({
   fresnelAmount: 1.0,
   fresnelOpacity: 1.0,
@@ -351,7 +350,6 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         targets: textRefs[6].position,
         y: textDispersePositionY,
         complete: () => {
-          strip(sceneRefs.planet_two)
           strip(sceneRefs.discovery_emission_1)
           strip(sceneRefs.discovery_emission_2)
           strip(sceneRefs.discovery_propeller_emission_1)
@@ -367,6 +365,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         targets: textRefs[5].position,
         y: textDispersePositionY,
         complete: () => {
+          strip(sceneRefs.planet_two)
           strip(sceneRefs.shooting_star)
           strip(sceneRefs.shooting_star_trajectory)
           strip(sceneRefs.shooting_star_emission)

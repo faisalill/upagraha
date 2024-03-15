@@ -39,6 +39,7 @@ loader.load( '/fonts/origin_tech.json', function ( font ) {
   geometries[10] = new TextGeometry( `A`, options);
   geometries[11] = new TextGeometry( `H`, options);
   geometries[12] = new TextGeometry( `A`, options);
+
 });
 
 const textColors = {

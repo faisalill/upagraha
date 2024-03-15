@@ -18,22 +18,22 @@
     progress.subscribe((value) => {
       progressBar.style.width = `${value * 70}vw`;
       if(value == 1) {
-
+  
         animate({
           targets: '.intro-wrapper',
-          scale: 0
+          opacity: 0
+        })
+
+        animate({
+          targets: '.canvas',
+          opacity: 1
         })
 
         animationStore.update((value) => {
           return {
             ...value,
-            isIntroDone: true
+            transitionToIntro: true
           }
-        })
-
-        animate({
-          targets: '.canvas',
-          scale: 1,
         })
 
       }
@@ -94,6 +94,7 @@
     height: 100vh;
     background: rgb(0, 0, 0);
     overflow-x: hidden;
+    transition: all 1s ease;
   }
   .scroll-container {
     position: absolute;
@@ -163,7 +164,7 @@
     height: 20px;
     background: red;
     transform: skew(30deg, 0deg);
-    animation-name: slideIn;
+    animation-name: fadeIn;
     animation-duration: 2s;
   }
   .loader .progress-bar {
@@ -173,9 +174,8 @@
     background: rgba(0, 255, 255, 1.0);
     transform: skew(30deg, 0deg);
     transition: all 200 ease 200;
-    animation-name: slideIn;
+    animation-name: fadeIn;
     animation-duration: 2s;
-    animation-delay: 1s;
   }
 /*https://codesandbox.io/p/sandbox/sci-fi-card-3-nof2e*/
   .info {
@@ -184,7 +184,7 @@
     left: 1%;
     z-index: 2;
     padding: 10px;
-    background-image: linear-gradient(rgba(0, 255, 255, 0.35), rgba(0, 255, 255, 0.20));
+    background: black;
     background-repeat: no-repeat;
     display: inline-block;
     -webkit-filter: drop-shadow(5px 5px 5px rgba(0, 255, 255, 0.8));
@@ -213,5 +213,6 @@
     width: 100vw;
     height: 100vh;
     z-index: 10;
+    transition: all 1s ease;
   }
 </style>

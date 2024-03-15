@@ -11,6 +11,7 @@ import Lenis from '@studio-freight/lenis';
 import { onMount } from 'svelte';
 import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin';
 import { cameraAnimation } from '$lib/animations/camera.js';
+import { introAnimation } from '$lib/animations/intro.js';
 import { scrollAnimationInit } from '$lib/animations/scroll.js';
 
 injectLookAtPlugin()
@@ -49,8 +50,9 @@ useFrame((_, delta) => {
   }
   if(satelliteRef && !animated) {
     animated = true;
-    cameraAnimation(cameraRef);
-    scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef)
+    introAnimation(satelliteRef, sceneRef, cameraRef);
+    cameraAnimation(cameraRef, satelliteRef);
+    scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef);
   }
 })
 </script>
@@ -71,7 +73,7 @@ rotationIntensity={0.2}
 rotationSpeed={6}
 speed={6}
 >
-<Satellite bind:ref={satelliteRef} position={[0, 0, 0]} />
+<Satellite bind:ref={satelliteRef}/>
 </Float>
 
 <GalaxyScene 

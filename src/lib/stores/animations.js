@@ -6,4 +6,5 @@ export const animationStore = writable({
   isScrollAnimationDone: false,
   isSectionOneCameraAnimationDone: false,
   isIntroDone: false,
+  transitionToIntro: false
 });
