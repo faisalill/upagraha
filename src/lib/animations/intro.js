@@ -38,7 +38,8 @@ const finalSceneState = {
 
 
 let animated = false;
-export function introAnimation(satelliteRef, sceneRef, cameraRef) {
+
+export function introAnimation(satelliteRef, sceneRef, cameraRef, rayMarchingMeshRef) {
   cameraRef.position.x = initialCameraState.position.x;
   cameraRef.position.y = initialCameraState.position.y;
   cameraRef.position.z = initialCameraState.position.z;
@@ -53,16 +54,32 @@ export function introAnimation(satelliteRef, sceneRef, cameraRef) {
   sceneRef.scale.y = 0;
   sceneRef.scale.z = 0;
 
+  rayMarchingMeshRef.scale.x = 0;
+  rayMarchingMeshRef.scale.y = 0;
+  rayMarchingMeshRef.scale.z = 0;
+
+  rayMarchingMeshRef.position.x = -7;
+  rayMarchingMeshRef.position.y = 5;
+  rayMarchingMeshRef.position.z = 0;
+
   animationStore.subscribe((value) => {
     if(value.transitionToIntro && !animated){
       animated = true;
+      animate({
+        targets: rayMarchingMeshRef.scale,
+        x: 10,
+        y: 10, 
+        z: 10,
+        easing: 'spring(3, 50, 7, 10)',
+        duration: 1000,
+      })
       animate({
         targets: sceneRef.scale,
         x: 3, 
         y: 3, 
         z: 3,
         easing: 'spring(3, 50, 7, 10)',
-        duration: 2000,
+        duration: 1000,
         complete: () => {
           animationStore.update((value) => {
             return {

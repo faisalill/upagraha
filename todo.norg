@@ -4,10 +4,12 @@
   - (x) Loading Screen
   - (x) Sync Animations
   - (x) Intro
-  - ( ) Material and Shaders
-  - ( ) Camera Following Mouse 
-  - ( ) Final Touches 
+  - (x) Material and Shaders
+  - (x) Camera Following Mouse 
+  - (x) Smooth Scrolling
+  - (x) Final Touches 
   - ( ) Responsive
   - ( ) NavBar
   - ( ) About / Team Section
+  - ( ) Optimize
 

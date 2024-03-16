@@ -186,10 +186,6 @@ const initialSatelliteTransforms = {
 
 function setupNonPositionTransforms (satelliteRef) {
 
-  animationStore.subscribe((value) => {
-    console.log(value)
-  })
-
   satelliteRef.children[0].rotation.x = finalSatelliteTransforms.top_panel.rotation[0]
   satelliteRef.children[0].rotation.y = finalSatelliteTransforms.top_panel.rotation[1]
   satelliteRef.children[0].rotation.z = finalSatelliteTransforms.top_panel.rotation[2]
@@ -424,7 +420,7 @@ export function initialSatelliteAnimation(satelliteRef) {
         x: finalSatelliteTransforms.mid_panels.position[0],
         y: finalSatelliteTransforms.mid_panels.position[1],
         z: finalSatelliteTransforms.mid_panels.position[2],
-      }) 
+      }, '+=450') 
 
       animateTimeline.add({
         targets: satelliteRef.children[18].position,

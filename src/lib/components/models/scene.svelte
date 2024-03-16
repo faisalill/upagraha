@@ -16,6 +16,10 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
   let starsRef2 = null;
   let shootingStarEmissionRef = null;
   let sputnikRef = null;
+  let planetFiveRef = null;
+  let planetTwoRef = null;
+  let discoveryPropellerEmission = null;
+  let discoveryEmission = null;
 
   useFrame((_, delta) => {
     if (sputnikSolarCellsRef) {
@@ -30,8 +34,17 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
     if (shootingStarEmissionRef) {
       shootingStarEmissionRef.material.uniforms.uTime.value += delta
     }
-    if (sputnikRef) {
-      // sputnikRef.rotation.z += 0.003;
+    if (planetFiveRef) {
+      planetFiveRef.material.uniforms.uTime.value += delta
+    }
+    if (planetTwoRef) {
+      planetTwoRef.material.uniforms.uTime.value += delta
+    }
+    if (discoveryPropellerEmission) {
+      discoveryPropellerEmission.material.uniforms.uTime.value += delta
+    }
+    if (discoveryEmission) {
+      discoveryEmission.material.uniforms.uTime.value += delta
     }
   })
 
@@ -46,7 +59,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
   {:then gltf}
 
     <!-- Sixth Plane and Fifth Plane are interchanged Typo..... -->
-    <T.Group scale={2.4}>
+    <T.Group scale={2.4} >
       <T.Mesh name="sixth_plane" geometry={gltf.nodes.sixth_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#011b35">
         </T.MeshStandardMaterial>
@@ -77,7 +90,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
        <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
       </T.Mesh>
 
-      <T.Mesh name="first_plane" geometry={gltf.nodes.first_plane.geometry}>
+      <T.Mesh name="first_plane" visible={false} geometry={gltf.nodes.first_plane.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#014d8f">
         </T.MeshStandardMaterial>
        <Edges transparent={true} opacity={0.0}  visible={false} color="cyan" />
@@ -90,7 +103,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
       </T.Mesh>
     </T.Group>
 
-    <T.Group>
+    <T.Group position={[0, -0.5, 0]}>
       <T.Mesh name="shooting_star" geometry={gltf.nodes.shooting_star.geometry}>
         <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#0000ff">
         </T.MeshStandardMaterial>
@@ -141,7 +154,8 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
     </T.Group>
 
 
-    <T.Mesh name="saturn_ring" geometry={gltf.nodes.saturn_ring.geometry}>
+    <T.Mesh name="saturn_ring" 
+      geometry={gltf.nodes.saturn_ring.geometry}>
       <T.ShaderMaterial
         transparent={true} 
         opacity={1.0}
@@ -155,7 +169,10 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
         varying vec2 vUv;
         void main() {
           vec3 final = vec3(sin(length(gl_FragCoord / 1800.0) * 300.0));
-          gl_FragColor = vec4(final, 1.0);
+          vec3 color = vec3(1, 3, 2);
+          color *= final; 
+          
+          gl_FragColor = vec4(color, 1.0);
         }
       `}
       />
@@ -168,9 +185,35 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
        <Edges transparent={true} opacity={0.0} visible={false} color="#6b0404" />
     </T.Mesh>
 
-    <T.Mesh name="planet_two" geometry={gltf.nodes.plane_two.geometry}>
-      <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#351747">
-      </T.MeshStandardMaterial>
+    <T.Mesh name="planet_two" bind:ref={planetTwoRef} geometry={gltf.nodes.plane_two.geometry}>
+      <T.ShaderMaterial
+        transparent={true}
+        opacity={1.0}
+        uniforms={{
+          uTime: { value: 0.0 }
+        }}
+        vertexShader={`
+       varying vec2 vUv;
+       void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+} 
+`}
+        fragmentShader={`
+       varying vec2 vUv;
+       uniform float uTime;
+        void main() {
+          vec2 newUv = vUv;
+          newUv.x += sin( vUv.y + uTime);
+          newUv.y += sin( vUv.x + uTime);
+          vec3 final = vec3(sin(length(newUv)));
+          final = 0.11 / final;
+          vec3 color = vec3(3.0, 1.0, 3.0);
+          color *= final;
+          gl_FragColor = vec4(vec3(color), 1.0);
+}
+`}
+      />
        <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
     </T.Mesh>
 
@@ -187,15 +230,23 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
     </T.Mesh>
 
       
-    <T.Mesh name="planet_five" geometry={gltf.nodes.planet_five.geometry}>
+    <T.Mesh name="planet_five" bind:ref={planetFiveRef} geometry={gltf.nodes.planet_five.geometry}>
         <T.ShaderMaterial 
           transparent={true} 
           opacity={1.0}
+          uniforms={{
+            uTime: { value: 0 }
+          }}
         fragmentShader={`
+        uniform float uTime;
         void main() {
-        vec3 final = vec3(sin(length( gl_FragCoord / 400.0) * 100.0));
+        vec2 vUv = gl_FragCoord.xy;
+        vUv += vec2(uTime * 20.0);
+        vec3 final = vec3(sin(length( vUv / 400.0) * 100.0));
         final = pow(final, vec3(2.0));
-        vec3 color = vec3(1.0, 2.0, 3.0);
+        vec3 color = vec3(1.0, 1.0, 3.0);
+        color.r += sin(uTime + vUv.x);
+        color.b += sin(uTime + vUv.y);
         gl_FragColor = vec4(color * final, 1.0);
         }
         `}
@@ -211,12 +262,12 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
     >
     <T.Group scale={3}>
       <T.Mesh name="discovery_emission_1" geometry={gltf.nodes.discovery_emission.geometry}>
-       <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#fffff">
+       <T.MeshStandardMaterial transparent={true} opacity={1.0} color="#ffffff">
         </T.MeshStandardMaterial>
        <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
-      <T.Mesh name="discovery_emission_2" geometry={gltf.nodes.discovery_emission.geometry} scale={1.2}
+      <T.Mesh bind:ref={discoveryEmission} name="discovery_emission_2" geometry={gltf.nodes.discovery_emission.geometry} scale={1.2}
           position={[0, -0.048, 0.035]}
         >
           <T.ShaderMaterial 
@@ -238,13 +289,12 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
             void main() {
               vec2 newUv = vUv;
               vec3 variationX = vec3(sin(length(newUv.x) * 80.0));
-              vec3 variationY = vec3(sin(length(newUv.y + uTime * 0.08) * 80.0));
-              vec3 final = vec3(step(0.1, variationX * variationY));
+              vec3 variationY = vec3(sin(length(newUv.y + uTime / 4.0 ) * 80.0));
+              vec3 final = vec3(step(0.1,  variationY));
               vec3 color = vec3(3.0, 0.0, 0.0);
-              color.r = sin(color.r * 0.5);
               final = pow(final, vec3(2.0));
               vec3 finalColor = color * final;
-              gl_FragColor = vec4(finalColor, color.r);
+              gl_FragColor = vec4(finalColor, 1);
             }
 `}
           />
@@ -257,7 +307,7 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
        <Edges transparent={true} opacity={0.0} visible={false} color="cyan" />
       </T.Mesh>
 
-      <T.Mesh name="discovery_propeller_emission_2" geometry={gltf.nodes.propeller_emission.geometry} scale={1.01} position={[0, 0, 0.01]}>
+      <T.Mesh bind:ref={discoveryPropellerEmission} name="discovery_propeller_emission_2" geometry={gltf.nodes.propeller_emission.geometry} scale={1.01} position={[0, 0, 0.01]}>
          <T.ShaderMaterial 
             transparent={true}
             opacity={1.0}
@@ -276,14 +326,12 @@ Command: npx @threlte/gltf@2.0.2 /home/fiveyyyy/github/upagraha/static/models/sc
             uniform float uTime;
             void main() {
               vec2 newUv = vUv;
-              vec3 variationX = vec3(sin(length(newUv.x) * 80.0));
-              vec3 variationY = vec3(sin(length(newUv.y + uTime * 0.08) * 80.0));
-              vec3 final = vec3(step(0.1, variationX * variationY));
+              newUv.y = -newUv.y;
+              vec3 variationY = vec3(cos(length(newUv.y + uTime / 2.0) * 20.0));
+              vec3 final = vec3(step(0.1, variationY));
               vec3 color = vec3(3.0, 0.0, 0.0);
-              color.r = sin(color.r * 0.5);
-              final = pow(final, vec3(2.0));
               vec3 finalColor = color * final;
-              gl_FragColor = vec4(finalColor, 0.5);
+              gl_FragColor = vec4(finalColor, finalColor.r);
             }
 `}
           />

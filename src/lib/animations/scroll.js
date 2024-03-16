@@ -238,7 +238,7 @@ function disperseInfo(direction) {
   }
 }
 
-export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef) {
+export function scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef, rayMarchingMeshRef, scene) {
 
   textTimeline= animate.timeline({
     easing: 'cubicBezier(.5, .05, .1, .3)',
@@ -299,6 +299,17 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
       textTimeline.add({
         targets: textRefs[12].position,
         y: textDispersePositionY,
+        begin: () => {
+          animate({
+            targets: rayMarchingMeshRef.position,
+            y: -50,
+            easing: 'easeOutQuad',
+            duration: 1000,
+            complete: () => {
+              scene.remove(rayMarchingMeshRef)
+            }
+          })
+        },
         complete: () => {
           strip(sceneRefs.sixth_plane)
         }
@@ -365,7 +376,6 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         targets: textRefs[5].position,
         y: textDispersePositionY,
         complete: () => {
-          strip(sceneRefs.planet_two)
           strip(sceneRefs.shooting_star)
           strip(sceneRefs.shooting_star_trajectory)
           strip(sceneRefs.shooting_star_emission)
@@ -378,6 +388,7 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         y: textDispersePositionY,
         complete: () => {
           strip(sceneRefs.planet_three)
+          strip(sceneRefs.planet_two)
         }
       })
 
