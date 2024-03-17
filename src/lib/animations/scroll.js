@@ -300,15 +300,17 @@ export function scrollAnimationInit(window, document, satelliteRef, cameraRef, s
         targets: textRefs[12].position,
         y: textDispersePositionY,
         begin: () => {
-          animate({
-            targets: rayMarchingMeshRef.position,
-            y: -50,
-            easing: 'easeOutQuad',
-            duration: 1000,
-            complete: () => {
-              scene.remove(rayMarchingMeshRef)
-            }
-          })
+          if(rayMarchingMeshRef) {
+            animate({
+              targets: rayMarchingMeshRef.position,
+              y: -50,
+              easing: 'easeOutQuad',
+              duration: 1000,
+              complete: () => {
+                scene.remove(rayMarchingMeshRef)
+              }
+            })
+          }
         },
         complete: () => {
           strip(sceneRefs.sixth_plane)

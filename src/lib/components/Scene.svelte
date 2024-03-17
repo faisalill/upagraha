@@ -28,6 +28,7 @@ let textRef = null;
 let animated = false;
 let rayMarchingMaterialRef = null;
 let rayMarchingMeshRef = null;
+let allowRayMarching = false;
 
 onMount(async ()=> {
   const lenis = new Lenis({
@@ -38,6 +39,14 @@ onMount(async ()=> {
     lenis.raf(time)
     requestAnimationFrame(raf)
   }
+
+  function getOs() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf("Windows") !== -1 || userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
+    return false;
+  }
+
+  allowRayMarching = getOs();
 
   requestAnimationFrame(raf)
   window.addEventListener('mousemove', (e) => {
@@ -104,6 +113,7 @@ speed={6}
   scale={0.017}
 />
 
+{#if allowRayMarching}
 <T.Mesh bind:ref={rayMarchingMeshRef} rotation={[0, Math.PI / 2, 0]}>
   <T.PlaneGeometry args={[5,5]} />
   <T.ShaderMaterial 
@@ -202,3 +212,4 @@ speed={6}
     `}
   />
 </T.Mesh>
+{/if}
