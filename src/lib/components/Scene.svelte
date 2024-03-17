@@ -51,8 +51,8 @@ onMount(async ()=> {
   requestAnimationFrame(raf)
   window.addEventListener('mousemove', (e) => {
     if(cameraRef){
-      cameraRef.position.z = 0.2 * -(e.clientX - window.innerWidth / 2) / 100;
-      cameraRef.position.y = 0.2 * -(e.clientY - window.innerHeight / 2) / 100;
+      cameraRef.position.z = 0.1 * -(e.clientX - window.innerWidth / 2) / 100;
+      cameraRef.position.y = 0.1 * -(e.clientY - window.innerHeight / 2) / 100;
       cameraRef.lookAt(4, 0, 0);
     }
   })
