@@ -29,7 +29,7 @@ let textRef = null;
 let animated = false;
 let rayMarchingMaterialRef = null;
 let rayMarchingMeshRef = null;
-let allowRayMarching = true;
+let allowRayMarching = false;
 let rayMarchingRefAnimated = false;
 
 onMount(async ()=> {
@@ -42,13 +42,13 @@ onMount(async ()=> {
     requestAnimationFrame(raf)
   }
 
-  // function getOs() {
-  //   const userAgent = navigator.userAgent;
-  //   if (userAgent.indexOf("Windows") !== -1 || userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
-  //   return false;
-  // }
-  //
-  // allowRayMarching = getOs();
+  function getOs() {
+    const userAgent = navigator.userAgent;
+    if (userAgent.indexOf("Windows") !== -1 || userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
+    return false;
+  }
+
+  allowRayMarching = getOs();
 
   requestAnimationFrame(raf)
   window.addEventListener('mousemove', (e) => {
