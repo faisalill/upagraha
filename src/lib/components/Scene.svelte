@@ -44,7 +44,7 @@ onMount(async ()=> {
 
   function getOs() {
     const userAgent = navigator.userAgent;
-    if (userAgent.indexOf("Windows") !== -1 || userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
+    if ( userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
     return false;
   }
 
