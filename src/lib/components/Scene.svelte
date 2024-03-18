@@ -13,6 +13,7 @@ import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin';
 import { cameraAnimation } from '$lib/animations/camera.js';
 import { introAnimation } from '$lib/animations/intro.js';
 import { scrollAnimationInit } from '$lib/animations/scroll.js';
+import animate from 'animejs';
 
 injectLookAtPlugin()
 
@@ -28,7 +29,8 @@ let textRef = null;
 let animated = false;
 let rayMarchingMaterialRef = null;
 let rayMarchingMeshRef = null;
-let allowRayMarching = false;
+let allowRayMarching = true;
+let rayMarchingRefAnimated = false;
 
 onMount(async ()=> {
   const lenis = new Lenis({
@@ -40,13 +42,13 @@ onMount(async ()=> {
     requestAnimationFrame(raf)
   }
 
-  function getOs() {
-    const userAgent = navigator.userAgent;
-    if (userAgent.indexOf("Windows") !== -1 || userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
-    return false;
-  }
-
-  allowRayMarching = getOs();
+  // function getOs() {
+  //   const userAgent = navigator.userAgent;
+  //   if (userAgent.indexOf("Windows") !== -1 || userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
+  //   return false;
+  // }
+  //
+  // allowRayMarching = getOs();
 
   requestAnimationFrame(raf)
   window.addEventListener('mousemove', (e) => {
@@ -75,6 +77,36 @@ useFrame((_, delta) => {
     scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef, rayMarchingMeshRef, scene);
   }
   if(rayMarchingMaterialRef) {
+      if(!rayMarchingRefAnimated) {
+        animated = true;
+        animate({
+          targets: rayMarchingMaterialRef.uniforms.iArmsMultiplier,
+          value: 4.0,
+          duration: 7000,
+          loop: true,
+          easing: 'easeInOutExpo',
+          direction: 'alternate'
+
+        })
+
+        animate({
+          targets: rayMarchingMaterialRef.uniforms.blueMultiplier,
+          value: 6.0,
+          duration: 4000,
+          loop: true,
+          direction: 'alternate',
+          easing: 'easeInOutExpo'
+        })
+
+        animate({
+          targets: rayMarchingMaterialRef.uniforms.purpleMultiplier,
+          value: 2.0,
+          duration: 4000,
+          loop: true,
+          direction: 'alternate',
+          easing: 'easeInOutExpo'
+        })
+      }
     rayMarchingMaterialRef.uniforms.uTime.value += delta;
   }
 })
@@ -119,7 +151,10 @@ speed={6}
   <T.ShaderMaterial 
     bind:ref={rayMarchingMaterialRef}
     uniforms={{
-      uTime: { value: 0.0 }
+      uTime: { value: 0.0 },
+      iArmsMultiplier: { value: 1.0 } ,
+      blueMultiplier: { value: 1.0 },
+      purpleMultiplier: { value: 1.0 }
     }}
     vertexShader={`
       varying vec2 vUv;
@@ -130,85 +165,149 @@ speed={6}
     `}
 
     fragmentShader={`
-      uniform float uTime;
+varying vec2 vUv;
+int windows = 0;
+vec2 m = vec2(2.,6.);
+const float pi = 3.141592;
 
-      mat2 rot2D(float a) {
-          return mat2(cos(a), -sin(a), sin(a), cos(a));
-      }
-      vec3 rotate3d (vec3 p, vec3 axis, float angle) {
-        return mix(dot(axis,p) * axis, p, cos(angle)) + cross(axis, p) * sin(angle);
-      }
-      float opSmoothUnion( float d1, float d2, float k )
-      {
-          float h = clamp( 0.5 + 0.5*(d2-d1)/k, 0.0, 1.0 );
-          return mix( d2, d1, h ) - k*h*(1.0-h);
-      }
-      float sdBox( vec3 p, vec3 b )
-      {
-        vec3 q = abs(p) - b;
-        return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
-      }
-      float sdSphere( vec3 p, float s )
-      {
-        return length(p)-s;
-      }
-      vec3 palette(float t) {
-        vec3 a = vec3(0.731, 1.098, 0.192);      
-        vec3 b = vec3(0.358, 1.090, 0.657);
-        vec3 c = vec3(1.077, 0.360, 0.328);
-        vec3 d = vec3(0.965, 2.265, 0.837);
+const mat2 m2 = mat2(.8,.6,-.6,.8);
 
-        return a + b*cos( 6.28318*(c*t+d) );
-      }
 
-      float getDistance(vec3 p){
-        p.z += uTime * 0.5;
-        p.y += 80.0;
+float noise(in vec2 p){
+
+    float res=0.;
+    float f=2.;
+	for( int i=0; i< 4; i++ ) 
+	{		
+        p=m2*p*f+.6;     
+        f*=1.0;
+        res+=sin(p.x+sin(2.*p.y));
+	}        	
+	return res/4.;
+}
+
+
+float fbmabs( vec2 p ) {
+	
+	float f=1.;   
+	float r = 0.0;	
+    for(int i = 0;i<8;i++){	
+		r += abs(noise( p*f ))/f;       
+	    f *=2.;
+        p-=vec2(-.01,.08)*r;
+	}
+	return r;
+}
+
+float fbmstars( vec2 p ) {
+    
+    p=floor(p*50.)/50.;
+	
+	float f=1.;   
+	float r = 0.0;	
+    for(int i = 1;i<5;i++){	
+		r += noise( p*(20.+3.*f) )/f; 
+        p*=m2;
+	    f +=1.;
         
-        vec3 repeat = p;
-        repeat.xy = fract(repeat.xy) - 0.5;
-        repeat.z = mod(repeat.z, 0.40) - 0.20;
+	}
+	return pow(r,8.);
+}
 
-        vec3 cube = vec3(0.1);
-        float dCube = sdBox(repeat , cube) ;
+float fbmdisk( vec2 p ) {
+	
+	float f=1.;   
+	float r = 0.0;	
+    for(int i = 1;i<7;i++){	
+		r += abs(noise( p*(f) ))/f;       
+	    f +=1.;
         
-        float totalDistance = dCube;
+	}
+	return 1./r;
+}
 
-        float ground = p.y + 0.75;
-        return opSmoothUnion(ground, totalDistance, 0.5); 
-      }
 
-      varying vec2 vUv;
-      void main(){
-        vec2 newUv = vUv - 0.5;
-        newUv *= 4.0;
-        vec3 color = vec3(0);
-      
-        vec3 ray_origin = vec3(0.0, 0.0, -3.0);
-        vec3 ray_direction = normalize(vec3(newUv, 1.0)); // 1 in z direction
-
-        float distanceTravelled = 0.0;
-        int i;
-        for (i = 0; i < 80; i++){
-          vec3 newPoint = ray_origin + ray_direction * distanceTravelled;
-          
-          newPoint.xy *= rot2D(distanceTravelled * 0.2 ) / 3.;
-          newPoint.y += sin(distanceTravelled * 1.0) / 8.0;
-
-          float distanceFromBox = getDistance(newPoint);
-          if (distanceFromBox < 0.01){
-            break;
-          }
-          distanceTravelled += distanceFromBox;
-          if (distanceTravelled > 100.0){
-            break;
-          }
-        }
-        color = palette(distanceTravelled * 0.015 + float(i) * 0.009);
-      
+float fbmdust( vec2 p ) {
+	
+	float f=1.;   
+	float r = 0.0;	
+    for(int i = 1;i<7;i++){	
+		r += 1./abs(noise( p*(f) ))/f;       
+	    f +=1.;
         
-        gl_FragColor = vec4(color, 1.0);
-      }
+	}
+	return pow(1.-1./r,4.);
+}
+
+
+float theta(float r, float wb, float wn){
+	return atan(exp(1./r)/wb)*2.*wn;
+}
+
+float arm(float n, float aw, float wb, float wn,vec2 p){
+    float t = atan(p.y,p.x);
+    float r = length(p);    
+	return pow(1.-.15*sin((theta(r,wb,wn)-t)*n),aw)*exp(-r*r)*exp(-.07/r);
+}
+
+vec2 maparm(float n, float aw, float wb, float wn,vec2 p){
+    float t = atan(p.y,p.x);
+    float r = length(p);
+    
+	return vec2((theta(r,wb,wn)-t)*n,r);
+}
+
+float bulb(vec2 p){
+    float r = exp(-dot(p,p)*1.2);
+    p.y-=.2;
+	return r+.5*exp(-dot(p,p)*12.);
+}
+
+float map(vec2 p){
+
+    
+    float a= arm(m.x,6.,.7,m.y,p);
+    float d = fbmdust(p);
+    float r = max(a*(.4+.1*arm(m.x+1.,4.,.7,m.y,p*m2))*(.1+.6*d+.4*fbmdisk(p)),bulb(p)*(.7+.2*d+.2*fbmabs(p)));
+    return max(r, a*fbmstars(p*4.));
+}
+
+
+vec2 rotate(in vec2 p, in float t)
+{
+	return p * cos(-t) + vec2(p.y, -p.x) * sin(-t);
+}
+
+uniform float iTime;	
+uniform float iArmsMultiplier;
+uniform float blueMultiplier;
+uniform float purpleMultiplier;
+void main() {
+	
+	vec2 p = vUv - 0.5;
+    p*=2.;
+	if(p.y>0.){
+    	if(p.x>0.)windows =1;
+    	else    windows =0;}
+    else{
+    	if(p.x>0.)windows =3;
+        else windows =2;}
+    
+    
+    p = rotate(p,-.02*iTime);
+    
+    m.y*=iArmsMultiplier;
+    
+	float r;
+    vec3 light = normalize(vec3(4., 2., -1.));
+
+    float k=1.5*map(p);
+    float b=.3*map(p*m2)+.4;
+    r=.2;
+   
+	gl_FragColor = clamp(vec4(r*k*k * blueMultiplier, r*k * purpleMultiplier, k*.5+b*.5, 0.1),0.,1.);
+}
+  `}
     `}
   />
 </T.Mesh>
