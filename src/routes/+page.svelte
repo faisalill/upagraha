@@ -68,7 +68,7 @@
     <div class="loader-wrapper">
       <div class="loader">
         <h1> Loading <span class="loading-percentage">{$progress.toFixed(1) * 100}</span> % </h1>
-        <h2> Currently Processing: <span class="loading-model">{trimToNineLetters($item)}...</span> <h2>
+        <h2 class="relative top-2"> Currently Processing: <span class="loading-model">{trimToNineLetters($item)}...</span> <h2>
         <div class="progress-bar-bg"></div>
         <div class="progress-bar" id="progress-bar"></div>
       </div>
@@ -160,6 +160,8 @@
     animation-duration: 2s;
   }
   .loader .progress-bar-bg {
+    position: relative;
+    top: 30px;
     width: 70vw;
     height: 20px;
     background: red;
@@ -169,7 +171,7 @@
   }
   .loader .progress-bar {
     position: relative;
-    bottom: 20px;
+    top: 10px;
     height: 20px;
     background: rgba(0, 255, 255, 1.0);
     transform: skew(30deg, 0deg);
@@ -177,7 +179,7 @@
     animation-name: fadeIn;
     animation-duration: 2s;
   }
-/*https://codesandbox.io/p/sandbox/sci-fi-card-3-nof2e*/
+  /*https://codesandbox.io/p/sandbox/sci-fi-card-3-nof2e*/
   .info {
     position: fixed;
     top: -150%;
