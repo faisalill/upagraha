@@ -42,17 +42,17 @@
       requestAnimationFrame(raf);
     }
 
-    function getOs() {
-      const userAgent = navigator.userAgent;
-      if (
-        userAgent.indexOf("Macintosh") !== -1 ||
-        userAgent.indexOf("Linux") !== -1
-      )
-        return true;
-      return false;
-    }
-
-    allowRayMarching = getOs();
+    // function getOs() {
+    //   const userAgent = navigator.userAgent;
+    //   if (
+    //     userAgent.indexOf("Macintosh") !== -1 ||
+    //     userAgent.indexOf("Linux") !== -1
+    //   )
+    //     return true;
+    //   return false;
+    // }
+    //
+    // allowRayMarching = getOs();
 
     requestAnimationFrame(raf);
     window.addEventListener("mousemove", (e) => {
@@ -100,10 +100,7 @@
 <T.AmbientLight intensity={8} />
 <T.DirectionalLight intensity={20.5} position={[5, 10, 0]} />
 
-<T.PerspectiveCamera
-  makeDefault
-  position={[10, 5, 1]}
-  bind:ref={cameraRef}
+<T.PerspectiveCamera makeDefault position={[10, 5, 1]} bind:ref={cameraRef}
 ></T.PerspectiveCamera>
 
 <Float floatIntensity={1} rotationIntensity={0.2} rotationSpeed={6} speed={6}>
