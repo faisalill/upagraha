@@ -1,114 +1,123 @@
 <script>
-import { useThrelte, T, useFrame } from '@threlte/core';
-import { OrbitControls, Float, useTexture } from '@threlte/extras';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-import { EquirectangularReflectionMapping } from 'three';
-import Satellite from '$lib/components/models/satellite.svelte';
-import GalaxyScene from '$lib/components/models/scene.svelte';
-import ShootingStar from './Stars.svelte';
-import Text from './Text.svelte';
-import Lenis from '@studio-freight/lenis';
-import { onMount } from 'svelte';
-import { injectLookAtPlugin } from '$lib/plugins/lookAtPlugin';
-import { cameraAnimation } from '$lib/animations/camera.js';
-import { introAnimation } from '$lib/animations/intro.js';
-import { scrollAnimationInit } from '$lib/animations/scroll.js';
-import animate from 'animejs';
+  import { useThrelte, T, useFrame } from "@threlte/core";
+  import { OrbitControls, Float, useTexture } from "@threlte/extras";
+  import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+  import { EquirectangularReflectionMapping } from "three";
+  import Satellite from "$lib/components/models/satellite.svelte";
+  import GalaxyScene from "$lib/components/models/scene.svelte";
+  import ShootingStar from "./Stars.svelte";
+  import Text from "./Text.svelte";
+  import Lenis from "@studio-freight/lenis";
+  import { onMount } from "svelte";
+  import { injectLookAtPlugin } from "$lib/plugins/lookAtPlugin";
+  import { cameraAnimation } from "$lib/animations/camera.js";
+  import { introAnimation } from "$lib/animations/intro.js";
+  import { scrollAnimationInit } from "$lib/animations/scroll.js";
+  import animate from "animejs";
 
-injectLookAtPlugin()
+  injectLookAtPlugin();
 
-const { scene } = useThrelte();
-const starTexture = useTexture('/textures/star.png');
-const rgbeLoader = new RGBELoader();
+  const { scene } = useThrelte();
+  const starTexture = useTexture("/textures/star.png");
+  const rgbeLoader = new RGBELoader();
 
-let torusRef = null;
-let satelliteRef = null;
-let cameraRef = null;
-let sceneRef = null;
-let textRef = null;
-let animated = false;
-let rayMarchingMaterialRef = null;
-let rayMarchingMeshRef = null;
-let allowRayMarching = false;
-let rayMarchingRefAnimated = false;
+  let torusRef = null;
+  let satelliteRef = null;
+  let cameraRef = null;
+  let sceneRef = null;
+  let textRef = null;
+  let animated = false;
+  let rayMarchingMaterialRef = null;
+  let rayMarchingMeshRef = null;
+  let allowRayMarching = false;
+  let rayMarchingRefAnimated = false;
 
-onMount(async ()=> {
-  const lenis = new Lenis({
-    duration: 2
-  });
+  onMount(async () => {
+    const lenis = new Lenis({
+      duration: 2,
+    });
 
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-
-  function getOs() {
-    const userAgent = navigator.userAgent;
-    if ( userAgent.indexOf("Macintosh") !== -1 || userAgent.indexOf("Linux") !== -1 ) return true;
-    return false;
-  }
-
-  allowRayMarching = getOs();
-
-  requestAnimationFrame(raf)
-  window.addEventListener('mousemove', (e) => {
-    if(cameraRef){
-      cameraRef.position.z = 0.1 * -(e.clientX - window.innerWidth / 2) / 100;
-      cameraRef.position.y = 0.1 * -(e.clientY - window.innerHeight / 2) / 100;
-      cameraRef.lookAt(4, 0, 0);
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
-  })
 
-  rgbeLoader.load('/textures/envMap.hdr', (texture) => {
-    texture.mapping = EquirectangularReflectionMapping;
-    scene.environment = texture;
+    function getOs() {
+      const userAgent = navigator.userAgent;
+      if (
+        userAgent.indexOf("Macintosh") !== -1 ||
+        userAgent.indexOf("Linux") !== -1
+      )
+        return true;
+      return false;
+    }
+
+    allowRayMarching = getOs();
+
+    requestAnimationFrame(raf);
+    window.addEventListener("mousemove", (e) => {
+      if (cameraRef) {
+        cameraRef.position.z =
+          (0.1 * -(e.clientX - window.innerWidth / 2)) / 100;
+        cameraRef.position.y =
+          (0.1 * -(e.clientY - window.innerHeight / 2)) / 100;
+        cameraRef.lookAt(4, 0, 0);
+      }
+    });
+
+    rgbeLoader.load("/textures/envMap.hdr", (texture) => {
+      texture.mapping = EquirectangularReflectionMapping;
+      scene.environment = texture;
+    });
   });
-})
 
-useFrame((_, delta) => {
-  if(torusRef) {
-    torusRef.material.uniforms.uTime.value += delta;
-    torusRef.rotation.z += 0.002;
-  }
-  if(satelliteRef && !animated && scene) {
-    animated = true;
-    introAnimation(satelliteRef, sceneRef, cameraRef, rayMarchingMeshRef);
-    cameraAnimation(cameraRef, satelliteRef);
-    scrollAnimationInit(window, document, satelliteRef, cameraRef, sceneRef, textRef, rayMarchingMeshRef, scene);
-  }
-  if(rayMarchingMaterialRef) {
-    rayMarchingMaterialRef.uniforms.uTime.value += delta;
-  }
-})
+  useFrame((_, delta) => {
+    if (torusRef) {
+      torusRef.material.uniforms.uTime.value += delta;
+      torusRef.rotation.z += 0.002;
+    }
+    if (satelliteRef && !animated && scene) {
+      animated = true;
+      introAnimation(satelliteRef, sceneRef, cameraRef, rayMarchingMeshRef);
+      cameraAnimation(cameraRef, satelliteRef);
+      scrollAnimationInit(
+        window,
+        document,
+        satelliteRef,
+        cameraRef,
+        sceneRef,
+        textRef,
+        rayMarchingMeshRef,
+        scene,
+      );
+    }
+    if (rayMarchingMaterialRef) {
+      rayMarchingMaterialRef.uniforms.uTime.value += delta;
+    }
+  });
 </script>
 
 <T.AmbientLight intensity={8} />
 <T.DirectionalLight intensity={20.5} position={[5, 10, 0]} />
 
-<T.PerspectiveCamera 
+<T.PerspectiveCamera
   makeDefault
   position={[10, 5, 1]}
   bind:ref={cameraRef}
->
-</T.PerspectiveCamera>
+></T.PerspectiveCamera>
 
-<Float
-floatIntensity={1}
-rotationIntensity={0.2}
-rotationSpeed={6}
-speed={6}
->
-<Satellite bind:ref={satelliteRef}/>
+<Float floatIntensity={1} rotationIntensity={0.2} rotationSpeed={6} speed={6}>
+  <Satellite bind:ref={satelliteRef} />
 </Float>
 
-<GalaxyScene 
+<GalaxyScene
   bind:ref={sceneRef}
   position={[-4, 4, 0]}
-  scale = {3}
+  scale={3}
   rotation={[0, 1.5, 0]}
 />
 
-<Text 
+<Text
   bind:ref={textRef}
   position={[-4, 7, 6]}
   rotation={[0, Math.PI / 2, 0]}
@@ -116,25 +125,24 @@ speed={6}
 />
 
 {#if allowRayMarching}
-<T.Mesh bind:ref={rayMarchingMeshRef} rotation={[0, Math.PI / 2, 0]}>
-  <T.PlaneGeometry args={[5,5]} />
-  <T.ShaderMaterial 
-    bind:ref={rayMarchingMaterialRef}
-    uniforms={{
-      uTime: { value: 0.0 },
-      iArmsMultiplier: { value: 1.0 } ,
-      blueMultiplier: { value: 1.0 },
-      purpleMultiplier: { value: 1.0 }
-    }}
-    vertexShader={`
+  <T.Mesh bind:ref={rayMarchingMeshRef} rotation={[0, Math.PI / 2, 0]}>
+    <T.PlaneGeometry args={[5, 5]} />
+    <T.ShaderMaterial
+      bind:ref={rayMarchingMaterialRef}
+      uniforms={{
+        uTime: { value: 0.0 },
+        iArmsMultiplier: { value: 1.0 },
+        blueMultiplier: { value: 1.0 },
+        purpleMultiplier: { value: 1.0 },
+      }}
+      vertexShader={`
       varying vec2 vUv;
       void main(){
         vUv = uv;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
     `}
-
-    fragmentShader={`
+      fragmentShader={`
       uniform float uTime;
 
       mat2 rot2D(float a) {
@@ -215,7 +223,7 @@ speed={6}
         gl_FragColor = vec4(color, 1.0);
       }
   `}
-    `}
-  />
-</T.Mesh>
+      `}
+    />
+  </T.Mesh>
 {/if}
